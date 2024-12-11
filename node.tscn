@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://dtoodb1f6flrw"]
+
+[ext_resource type="Script" path="res://node.gd" id="1_alfs7"]
+[ext_resource type="PackedScene" uid="uid://c5lld6vos0n0c" path="res://environment.tscn" id="1_n52fn"]
+[ext_resource type="PackedScene" uid="uid://830gexhsulss" path="res://world.tscn" id="3_va6wg"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hxf8a"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_14fnp"]
+sky_material = SubResource("ProceduralSkyMaterial_hxf8a")
+
+[sub_resource type="Environment" id="Environment_ifebe"]
+background_mode = 2
+sky = SubResource("Sky_14fnp")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="world" type="Node"]
+script = ExtResource("1_alfs7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ifebe")
+
+[node name="Environment" parent="." instance=ExtResource("1_n52fn")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, -0.149995, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="mainmenu" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 318.0
+offset_top = 187.0
+offset_right = -318.0
+offset_bottom = -187.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/mainmenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/mainmenu/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="CanvasLayer/mainmenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu
+"
+horizontal_alignment = 1
+
+[node name="hostbutton" type="Button" parent="CanvasLayer/mainmenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Host"
+
+[node name="joinbutton" type="Button" parent="CanvasLayer/mainmenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Join"
+
+[node name="adressentry" type="LineEdit" parent="CanvasLayer/mainmenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Enter Adress Here to Join"
+alignment = 1
+
+[node name="player" parent="." instance=ExtResource("3_va6wg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.830769, 0)
+
+[connection signal="pressed" from="CanvasLayer/mainmenu/MarginContainer/VBoxContainer/hostbutton" to="." method="_on_hostbutton_pressed"]
+[connection signal="pressed" from="CanvasLayer/mainmenu/MarginContainer/VBoxContainer/joinbutton" to="." method="_on_joinbutton_pressed"]

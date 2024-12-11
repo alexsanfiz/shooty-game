@@ -1,0 +1,91 @@
+[gd_scene load_steps=9 format=3 uid="uid://c5lld6vos0n0c"]
+
+[ext_resource type="PackedScene" uid="uid://dlfxydhlv6qje" path="res://Environment.glb" id="1_lqq2q"]
+[ext_resource type="Texture2D" uid="uid://wgypp6uwegnr" path="res://kenney_prototype-textures/PNG/Dark/texture_08.png" id="2_vrrj5"]
+[ext_resource type="Texture2D" uid="uid://c27rvar2gkvnc" path="res://kenney_prototype-textures/PNG/Orange/texture_09.png" id="3_odvwe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cudh4"]
+albedo_texture = ExtResource("2_vrrj5")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_87m3w"]
+albedo_texture = ExtResource("3_odvwe")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ptu4x"]
+albedo_texture = ExtResource("3_odvwe")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dlggh"]
+albedo_texture = ExtResource("3_odvwe")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8daaw"]
+albedo_color = Color(0.815686, 0.47451, 0.101961, 1)
+
+[node name="Environment" instance=ExtResource("1_lqq2q")]
+
+[node name="Plane" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_cudh4")
+
+[node name="Cylinder" parent="." index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_87m3w")
+
+[node name="Cylinder_002" parent="." index="2"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ptu4x")
+
+[node name="Cylinder_003" parent="." index="3"]
+surface_material_override/0 = SubResource("StandardMaterial3D_dlggh")
+
+[node name="Cylinder_004" parent="." index="4"]
+surface_material_override/0 = SubResource("StandardMaterial3D_dlggh")
+
+[node name="Cylinder_005" parent="." index="5"]
+surface_material_override/0 = SubResource("StandardMaterial3D_dlggh")
+
+[node name="Cylinder_006" parent="." index="6"]
+surface_material_override/0 = SubResource("StandardMaterial3D_dlggh")
+
+[node name="Cylinder_007" parent="." index="7"]
+surface_material_override/0 = SubResource("StandardMaterial3D_dlggh")
+
+[node name="Cylinder_008" parent="." index="8"]
+surface_material_override/0 = SubResource("StandardMaterial3D_dlggh")
+
+[node name="Cube" parent="." index="9"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
+
+[node name="Cube_001" parent="." index="10"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
+
+[node name="Cube_002" parent="." index="11"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
+
+[node name="Cube_003" parent="." index="12"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
+
+[node name="Cube_004" parent="." index="13"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
+
+[node name="Cube_005" parent="." index="14"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
+
+[node name="Cube_006" parent="." index="15"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
+
+[node name="Cube_007" parent="." index="16"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
+
+[node name="Cube_008" parent="." index="17"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
+
+[node name="Cube_009" parent="." index="18"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
+
+[node name="Cube_010" parent="." index="19"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
+
+[node name="Cube_011" parent="." index="20"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
+
+[node name="Cube_012" parent="." index="21"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8daaw")
