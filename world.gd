@@ -1,30 +1,56 @@
 extends CharacterBody3D
 
+signal health_changed(health_value)
 
 var SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const SENSITIVITY = 0.0015
 var gravity = 9.8
+var bullets = 8
+var is_reloading = false
 
 @onready var head = $head
 @onready var camera = $head/Camera3D
-@onready var anim_player = $animationplayer
+@onready var anim_player = $AnimationPlayer
 @onready var muzzle_flash = $head/Camera3D/pistol/muzzleflash
+@onready var raycast = $head/Camera3D/RayCast3D
+
+
+var health = 100
+
+func _enter_tree():
+	set_multiplayer_authority(str(name).to_int())
 	
 func _ready():
+	if not is_multiplayer_authority(): return
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	camera.current = true
+	
 
 func _unhandled_input(event):
+	if not is_multiplayer_authority(): return
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
-	if Input.is_action_just_pressed("shoot") \
-			and anim_player.current_animation != "shot":
-		play_shoot_effects()
 		
+	if Input.is_action_just_pressed("shoot"):
+		if bullets > 0 and anim_player.current_animation != "shot" and not is_reloading:
+			bullets -= 1
+			play_shoot_effects.rpc()
+			if raycast.is_colliding():
+				var hit_player = raycast.get_collider()
+				if hit_player.has_method("recieve_damage"):
+					hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
+		if bullets == 0 and not is_reloading and anim_player.current_animation != "shot":
+			play_reload_effects.rpc()
+
+	if Input.is_action_just_pressed("Reload") and bullets < 8 and not is_reloading and anim_player.current_animation != "shot":
+		play_reload_effects.rpc()
+
 func _physics_process(delta):
-	# Add the gravity.
+	if not is_multiplayer_authority(): return
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
@@ -45,7 +71,7 @@ func _physics_process(delta):
 	if anim_player.current_animation == "shot":
 		pass
 	elif input_dir != Vector2.ZERO and is_on_floor():
-			anim_player.play("move")
+			anim_player.play("walk")
 	else:
 		anim_player.play("idle")
 		
@@ -56,9 +82,35 @@ func _physics_process(delta):
 		SPEED = 5.0
 	
 	move_and_slide()
-	
+
+@rpc("call_local")
 func play_shoot_effects():
 	anim_player.stop()
 	anim_player.play("shot")
 	muzzle_flash.restart()
 	muzzle_flash.emitting = true
+	
+@rpc("any_peer")
+func play_reload_effects():
+	anim_player.stop()
+	anim_player.play("reload")
+
+@rpc("any_peer")
+func recieve_damage():
+	health -= 35
+	if health <= 0:
+		health = 100
+		position = Vector3.ZERO
+	health_changed.emit(health)
+
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "Reload":
+		bullets = 8
+		is_reloading = false
+		print("reload finished")
+		anim_player.play("idle")
+	elif anim_name == "shot":
+		print("shot finished")
+		anim_player.play("idle")
