@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://830gexhsulss"]
+[gd_scene load_steps=19 format=3 uid="uid://830gexhsulss"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_jgjkb"]
 [ext_resource type="PackedScene" uid="uid://1e8ji7agq8g1" path="res://low-poly_desert_eagle.glb" id="2_4x1o3"]
@@ -37,6 +37,9 @@ particles_anim_loop = false
 material = SubResource("StandardMaterial3D_1q5lj")
 size = Vector2(0.5, 0.5)
 orientation = 2
+
+[sub_resource type="Animation" id="Animation_ppah8"]
+resource_name = "AK_idle"
 
 [sub_resource type="Animation" id="Animation_5dv1c"]
 length = 0.001
@@ -97,7 +100,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_k7hd5"]
 resource_name = "reload"
-length = 1.75
+length = 1.5
 step = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -106,10 +109,10 @@ tracks/0/path = NodePath("head/Camera3D/pistol:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.7, 1.5),
-"transitions": PackedFloat32Array(0.5, 2, 0.5),
+"times": PackedFloat32Array(0, 0.595, 1.25, 1.5),
+"transitions": PackedFloat32Array(0.5, -2, 0.5, 0.5),
 "update": 0,
-"values": [Vector3(0.5, -0.25, -0.5), Vector3(0.5, -0.12, -0.481), Vector3(0.5, -0.25, -0.5)]
+"values": [Vector3(0.5, -0.25, -0.5), Vector3(0.5, -0.15, -0.5), Vector3(0.5, -0.25, -0.5), Vector3(0.5, -0.25, -0.5)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -118,10 +121,10 @@ tracks/1/path = NodePath("head/Camera3D/pistol:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.7, 1.5, 1.75),
-"transitions": PackedFloat32Array(0.5, 7.99999, 0.5, 2),
+"times": PackedFloat32Array(0, 0.625, 1.25, 1.5),
+"transitions": PackedFloat32Array(0.5, -2, 0.5, 0.5),
 "update": 0,
-"values": [Vector3(0, 1.22173, 0), Vector3(0, 1.22173, 3.49066), Vector3(0, 1.22173, 6.63225), Vector3(0, 1.22173, 6.28319)]
+"values": [Vector3(0, 1.22173, 0), Vector3(0, 1.22173, 1.74533), Vector3(0, 1.22173, 6.63225), Vector3(0, 1.22173, 6.28319)]
 }
 
 [sub_resource type="Animation" id="Animation_fscl4"]
@@ -138,7 +141,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.02, 0.75),
 "transitions": PackedFloat32Array(1, 0.5, 2),
 "update": 0,
-"values": [Vector3(0.5, -0.25, -0.5), Vector3(0.5, -0.2, -0.45), Vector3(0.5, -0.25, -0.5)]
+"values": [Vector3(0.5, -0.25, -0.5), Vector3(0.5, -0.174408, -0.440288), Vector3(0.5, -0.25, -0.5)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -150,7 +153,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.02, 0.75),
 "transitions": PackedFloat32Array(1, 0.5, 2),
 "update": 0,
-"values": [Vector3(0, 1.22173, 0), Vector3(0, 1.22173, 0.349066), Vector3(0, 1.22173, 0)]
+"values": [Vector3(0, 1.22173, 0), Vector3(0.0409882, 1.22405, 0.461983), Vector3(0, 1.22173, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_enf4v"]
@@ -170,11 +173,12 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_76f81"]
 _data = {
+"AK_idle": SubResource("Animation_ppah8"),
 "RESET": SubResource("Animation_5dv1c"),
-"idle": SubResource("Animation_0eydn"),
-"reload": SubResource("Animation_k7hd5"),
-"shot": SubResource("Animation_fscl4"),
-"walk": SubResource("Animation_enf4v")
+"pistol_idle": SubResource("Animation_0eydn"),
+"pistol_reload": SubResource("Animation_k7hd5"),
+"pistol_shot": SubResource("Animation_fscl4"),
+"pistol_walk": SubResource("Animation_enf4v")
 }
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_62bjw"]
@@ -208,12 +212,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3416, 0)
 
 [node name="Camera3D" type="Camera3D" parent="head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0253909, 0.016852, 0.00421357)
-fov = 85.0
+fov = 80.0
 
 [node name="pistol" parent="head/Camera3D" instance=ExtResource("2_4x1o3")]
 transform = Transform3D(0.000684043, 0, 0.00187939, 0, 0.002, 0, -0.00187939, 0, 0.000684043, 0.5, -0.25, -0.5)
 
-[node name="muzzleflash" type="GPUParticles3D" parent="head/Camera3D/pistol"]
+[node name="pistolmuzzleflash" type="GPUParticles3D" parent="head/Camera3D/pistol"]
 transform = Transform3D(0.999999, 0, -2.38419e-07, 0, 0.999998, 0, 2.38419e-07, 0, 0.999999, 158.454, 43.4326, 1.70653)
 emitting = false
 amount = 1
@@ -234,7 +238,7 @@ collision_mask = 2
 libraries = {
 "": SubResource("AnimationLibrary_76f81")
 }
-autoplay = "idle"
+autoplay = "pistol_idle"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_62bjw")

@@ -2,25 +2,25 @@ extends CharacterBody3D
 
 signal health_changed(health_value)
 
-var SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+var SPEED = 6.5
+const JUMP_VELOCITY = 5.5
 const SENSITIVITY = 0.0015
-var gravity = 9.8
-var bullets = 8
-var is_reloading = false
+var gravity = 10.0
+var PistolBullets = 8
+var AK_is_equipped = false
+var health = 100
 
 @onready var head = $head
 @onready var camera = $head/Camera3D
 @onready var anim_player = $AnimationPlayer
-@onready var muzzle_flash = $head/Camera3D/pistol/muzzleflash
+@onready var muzzle_flash = $head/Camera3D/pistol/pistolmuzzleflash
 @onready var raycast = $head/Camera3D/RayCast3D
 
 
-var health = 100
-
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
-	
+
+#ON READY
 func _ready():
 	if not is_multiplayer_authority(): return
 	
@@ -28,33 +28,37 @@ func _ready():
 	camera.current = true
 	
 
+#CAMERA AND MULTIPLAYER AUTHORITY
 func _unhandled_input(event):
 	if not is_multiplayer_authority(): return
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
-		
+
+#SHOOTING AND RELOADING
 	if Input.is_action_just_pressed("shoot"):
-		if bullets > 0 and anim_player.current_animation != "shot" and not is_reloading:
-			bullets -= 1
+		if PistolBullets > 0 and anim_player.current_animation != "pistol_shot" and anim_player.current_animation != "pistol_reload":
+			PistolBullets -= 1
 			play_shoot_effects.rpc()
 			if raycast.is_colliding():
 				var hit_player = raycast.get_collider()
 				if hit_player.has_method("recieve_damage"):
 					hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
-		if bullets == 0 and not is_reloading and anim_player.current_animation != "shot":
+		if PistolBullets == 0 and anim_player.current_animation != "pistol_reload" and anim_player.current_animation != "pistol_shot":
 			play_reload_effects.rpc()
 
-	if Input.is_action_just_pressed("Reload") and bullets < 8 and not is_reloading and anim_player.current_animation != "shot":
+	if Input.is_action_just_pressed("Reload") and PistolBullets < 8 and anim_player.current_animation != "pistol_reload" and anim_player.current_animation != "pistol_shot":
 		play_reload_effects.rpc()
 
+#JUMPING
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
-	# Handle jump.
+
+	# HANDLE JUMP
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	# Get the input direction and handle the movement/deceleration.
@@ -68,12 +72,15 @@ func _physics_process(delta):
 		velocity.x = 0.0
 		velocity.z = 0.0
 	
-	if anim_player.current_animation == "shot":
+	#HANDLE ANIMATIONS
+	if anim_player.current_animation == "pistol_shot":
+		pass
+	elif anim_player.current_animation == "pistol_reload":
 		pass
 	elif input_dir != Vector2.ZERO and is_on_floor():
-			anim_player.play("walk")
+			anim_player.play("pistol_walk")
 	else:
-		anim_player.play("idle")
+		anim_player.play("pistol_idle")
 		
 	if Input.is_action_pressed("Sprint"):
 		SPEED = 7.5
@@ -83,17 +90,18 @@ func _physics_process(delta):
 	
 	move_and_slide()
 
+#MULTIPLAYER UPDATES
 @rpc("call_local")
 func play_shoot_effects():
 	anim_player.stop()
-	anim_player.play("shot")
+	anim_player.play("pistol_shot")
 	muzzle_flash.restart()
 	muzzle_flash.emitting = true
 	
-@rpc("any_peer")
+@rpc("call_local")
 func play_reload_effects():
 	anim_player.stop()
-	anim_player.play("reload")
+	anim_player.play("pistol_reload")
 
 @rpc("any_peer")
 func recieve_damage():
@@ -104,13 +112,12 @@ func recieve_damage():
 	health_changed.emit(health)
 
 
-
+#ANIMATIONS FINISHED
 func _on_animation_player_animation_finished(anim_name):
-	if anim_name == "Reload":
-		bullets = 8
-		is_reloading = false
+	if anim_name == "pistol_reload":
+		PistolBullets = 8
 		print("reload finished")
-		anim_player.play("idle")
-	elif anim_name == "shot":
+		anim_player.play("pistol_idle")
+	elif anim_name == "pistol_shot":
 		print("shot finished")
-		anim_player.play("idle")
+		anim_player.play("pistol_idle")
