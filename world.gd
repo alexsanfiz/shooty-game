@@ -88,6 +88,8 @@ func _physics_process(delta):
 	if Input.is_action_just_released("Sprint"):
 		SPEED = 5.0
 	
+	if Input.is_action_just_pressed("slide"):
+		SPEED = 10
 	move_and_slide()
 
 #MULTIPLAYER UPDATES
