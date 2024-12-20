@@ -1,5 +1,5 @@
-res://Game.tscn
-res://world.gdshader
-res://world.tscn
 res://map.tscn
+res://world.gdshader
+res://Game.tscn
+res://world.tscn
 res://world.gd

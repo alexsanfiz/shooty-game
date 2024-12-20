@@ -9,6 +9,11 @@ var gravity = 10.0
 var PistolBullets = 8
 var AK_is_equipped = false
 var health = 100
+var is_sliding = false
+var slide_speed = 20.0  # Speed during slide
+var slide_direction = Vector3.ZERO  # Store the direction during the slide
+var slide_slow = 0.25
+var is_sprinting = false
 
 @onready var head = $head
 @onready var camera = $head/Camera3D
@@ -26,7 +31,8 @@ func _ready():
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	camera.current = true
-	
+	$MeshInstance3D.rotation.x = deg_to_rad(0)
+	$CollisionShape3D.rotation.x = deg_to_rad(0)
 
 #CAMERA AND MULTIPLAYER AUTHORITY
 func _unhandled_input(event):
@@ -51,45 +57,77 @@ func _unhandled_input(event):
 	if Input.is_action_just_pressed("Reload") and PistolBullets < 8 and anim_player.current_animation != "pistol_reload" and anim_player.current_animation != "pistol_shot":
 		play_reload_effects.rpc()
 
-#JUMPING
+#MOVEMENT
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-
-
-	# HANDLE JUMP
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+	
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+
 	var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
+	
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		velocity.y = JUMP_VELOCITY  # Add jump height
+		if is_sliding:
+			velocity.x = slide_direction.x * slide_speed
+			velocity.z = slide_direction.z * slide_speed
+			is_sliding = false  # End the slide
+			slide_speed = 20  # Reset for future slides
+			$MeshInstance3D.rotation.x = deg_to_rad(0)
+			$CollisionShape3D.rotation.x = deg_to_rad(0)
+
+		else:
+			velocity.x = direction.x * SPEED
+			velocity.z = direction.z * SPEED
+
+	
+	if is_sliding:
+		velocity.x = slide_direction.x * slide_speed
+		velocity.z = slide_direction.z * slide_speed
+		if slide_speed > 0:
+			slide_speed -= slide_slow
+			$MeshInstance3D.rotation.x = deg_to_rad(50)
+			$CollisionShape3D.rotation.x = deg_to_rad(50)
+		elif slide_speed == 0:
+			is_sliding = false
+			slide_speed = 20
+			$MeshInstance3D.rotation.x = deg_to_rad(0)
+			$CollisionShape3D.rotation.x = deg_to_rad(0)
+	elif direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 	else:
 		velocity.x = 0.0
 		velocity.z = 0.0
+
+	if Input.is_action_pressed("Sprint"):
+		not is_sliding
+		SPEED = 10
+		slide_speed = 20
+		$MeshInstance3D.rotation.x = deg_to_rad(0)
+		$CollisionShape3D.rotation.x = deg_to_rad(0)
+
+	if Input.is_action_just_released("Sprint"):
+		SPEED = 6.5
 	
+	if Input.is_action_just_pressed("slide"):
+		if is_on_floor() and not is_sliding and direction:
+			is_sliding = true
+			slide_direction = direction
+			velocity.x = slide_direction.x * slide_speed
+			velocity.z = slide_direction.z * slide_speed
+
 	#HANDLE ANIMATIONS
 	if anim_player.current_animation == "pistol_shot":
 		pass
 	elif anim_player.current_animation == "pistol_reload":
 		pass
-	elif input_dir != Vector2.ZERO and is_on_floor():
+	elif input_dir != Vector2.ZERO and is_on_floor() and not is_sliding:
 			anim_player.play("pistol_walk")
 	else:
 		anim_player.play("pistol_idle")
 		
-	if Input.is_action_pressed("Sprint"):
-		SPEED = 7.5
-		
-	if Input.is_action_just_released("Sprint"):
-		SPEED = 5.0
-	
-	if Input.is_action_just_pressed("slide"):
-		SPEED = 10
 	move_and_slide()
 
 #MULTIPLAYER UPDATES

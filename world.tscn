@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://830gexhsulss"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_jgjkb"]
-[ext_resource type="PackedScene" uid="uid://1e8ji7agq8g1" path="res://low-poly_desert_eagle.glb" id="2_4x1o3"]
+[ext_resource type="PackedScene" uid="uid://gk8067m4rsly" path="res://low-poly_desert_eagle.glb" id="2_4x1o3"]
 [ext_resource type="Texture2D" uid="uid://dy5yqgn0iubn" path="res://kenney_particle-pack/PNG (Transparent)/star_06.png" id="3_m4fnp"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_27bwh"]
