@@ -156,8 +156,7 @@ func _physics_process(delta):
 			anim_player.play("pistol_walk")
 	elif current_gun_state == PlayerGunState.pistol:
 		anim_player.play("pistol_idle")
-		
-	if anim_player.current_animation == "AK_shot":
+	elif anim_player.current_animation == "AK_shot":
 		pass
 	elif anim_player.current_animation == "AK_reload":
 		pass
