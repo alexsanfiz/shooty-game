@@ -88,6 +88,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		if is_on_floor() or double_jumps > 0:
 			velocity.y = JUMP_VELOCITY  # Add jump height
+			double_jumps = 0
 			if current_movement_state == PlayerMovementState.Sliding:
 				slide_dust.emitting = false
 				velocity.x = slide_direction.x * slide_speed
@@ -224,3 +225,4 @@ func _on_animation_player_animation_finished(anim_name):
 			anim_player.play("AK_shot")
 		else:
 			anim_player.play("AK_idle")
+			
