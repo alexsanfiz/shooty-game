@@ -27,7 +27,7 @@ var current_movement_state = PlayerMovementState.Normal
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
-
+	
 #ON READY
 func _ready():
 	if not is_multiplayer_authority(): return
@@ -90,7 +90,7 @@ func _physics_process(delta):
 			velocity.y = JUMP_VELOCITY  # Add jump height
 			double_jumps = 0
 			if current_movement_state == PlayerMovementState.Sliding:
-				slide_dust.emitting = false
+				slide_dust.emitting = true
 				velocity.x = slide_direction.x * slide_speed
 				velocity.z = slide_direction.z * slide_speed
 				current_movement_state = PlayerMovementState.Normal

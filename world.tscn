@@ -383,10 +383,10 @@ draw_pass_1 = SubResource("PlaneMesh_xq5vm")
 
 [node name="AK" parent="head/Camera3D" instance=ExtResource("4_0x2d6")]
 transform = Transform3D(-7.23998e-07, 0, 0.2, 0, 0.2, 0, -0.2, 0, -7.23998e-07, 0.411674, -0.351142, -0.632561)
+visible = false
 
 [node name="AKmuzzleflash" type="GPUParticles3D" parent="head/Camera3D/AK"]
 transform = Transform3D(0.999999, 0, -2.38419e-07, 0, 0.999998, 0, 2.38419e-07, 0, 0.999999, 4.13906, 0.757345, 1.48114)
-visible = false
 emitting = false
 amount = 1
 lifetime = 0.08

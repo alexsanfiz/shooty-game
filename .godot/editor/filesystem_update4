@@ -1,5 +1,5 @@
 res://Game.tscn
+res://Game.gd
 res://map.tscn
 res://world.tscn
-res://pause_menu.tscn
 res://world.gd
