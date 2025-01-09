@@ -37,6 +37,8 @@ func _ready():
 	$MeshInstance3D.rotation.x = deg_to_rad(0)
 	$CollisionShape3D.rotation.x = deg_to_rad(0)
 	slide_dust.emitting = false
+	update_slide_dust.rpc(false)
+	current_gun_state = PlayerGunState.AK
 
 #CAMERA AND MULTIPLAYER AUTHORITY
 func _unhandled_input(event):
@@ -61,14 +63,14 @@ func _unhandled_input(event):
 	if Input.is_action_just_pressed("Reload") and PistolBullets < 8 and anim_player.current_animation != "pistol_reload" and anim_player.current_animation != "pistol_shot" and current_gun_state == PlayerGunState.pistol:
 		play_pistol_reload_effects.rpc()
 		
-	if Input.is_action_pressed("shoot") and current_gun_state == PlayerGunState.AK and anim_player.current_animation != "AK_shot" and anim_player.current_animation != "AK_reload":
-		if AKBullets > 0 and anim_player.current_animation != "AK_shot" and anim_player.current_animation != "AK_reload":
-			AKBullets -= 1
-			play_AK_shoot_effects.rpc()
-			if raycast.is_colliding():
-				var hit_player = raycast.get_collider()
-				if hit_player.has_method("recieve_damage"):
-					hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
+	if AKBullets > 0 and anim_player.current_animation != "AK_shot" and anim_player.current_animation != "AK_reload":
+		AKBullets -= 1
+		print("Shooting AK, bullets left: ", AKBullets)  # Debugging
+		play_AK_shoot_effects.rpc()  # Ensure this is called remotely
+		if raycast.is_colliding():
+			var hit_player = raycast.get_collider()
+			if hit_player.has_method("recieve_damage"):
+				hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
 		if AKBullets == 0 and anim_player.current_animation != "AK_reload" and anim_player.current_animation != "AK_shot":
 			play_AK_reload_effects.rpc()
 
@@ -90,7 +92,8 @@ func _physics_process(delta):
 			velocity.y = JUMP_VELOCITY  # Add jump height
 			double_jumps = 0
 			if current_movement_state == PlayerMovementState.Sliding:
-				slide_dust.emitting = true
+				slide_dust.emitting = false
+				update_slide_dust.rpc(false)
 				velocity.x = slide_direction.x * slide_speed
 				velocity.z = slide_direction.z * slide_speed
 				current_movement_state = PlayerMovementState.Normal
@@ -109,12 +112,14 @@ func _physics_process(delta):
 		velocity.z = slide_direction.z * slide_speed
 		if slide_speed > 0:
 			slide_dust.emitting = true
+			update_slide_dust.rpc(true)
 			slide_speed -= slide_slow
 			$MeshInstance3D.rotation.x = deg_to_rad(50)
 			$CollisionShape3D.rotation.x = deg_to_rad(50)
 		elif slide_speed == 0:
 			current_movement_state = PlayerMovementState.Normal
 			slide_dust.emitting = false
+			update_slide_dust.rpc(false)
 			slide_speed = 20
 			$MeshInstance3D.rotation.x = deg_to_rad(0)
 			$CollisionShape3D.rotation.x = deg_to_rad(0)
@@ -129,6 +134,7 @@ func _physics_process(delta):
 		if current_movement_state == PlayerMovementState.Sliding:
 			current_movement_state = PlayerMovementState.Sprinting
 			slide_dust.emitting = false
+			update_slide_dust.rpc(false)
 			$MeshInstance3D.rotation.x = deg_to_rad(0)
 			$CollisionShape3D.rotation.x = deg_to_rad(0)
 			slide_speed = 20
@@ -206,6 +212,10 @@ func recieve_damage():
 		health = 100
 		position = Vector3.ZERO
 	health_changed.emit(health)
+
+@rpc("call_remote")
+func update_slide_dust(emitting: bool):
+	slide_dust.emitting = emitting
 
 
 #ANIMATIONS FINISHED

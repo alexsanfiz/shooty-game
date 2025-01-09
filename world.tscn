@@ -324,13 +324,14 @@ properties/3/spawn = true
 properties/3/replication_mode = 1
 
 [sub_resource type="Curve" id="Curve_3xprq"]
-_data = [Vector2(0.717391, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.120773, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_f1fna"]
 curve = SubResource("Curve_3xprq")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7j4rc"]
+emission_shape_scale = Vector3(0.75, 0.75, 0.75)
 emission_shape = 3
 emission_box_extents = Vector3(1, 0.3, 1)
 gravity = Vector3(0, 0, 2)
@@ -414,7 +415,8 @@ replication_config = SubResource("SceneReplicationConfig_62bjw")
 [node name="slideDust" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0701369, 0.349278)
 sorting_offset = 5.0
-amount = 50
+amount = 100
+lifetime = 0.25
 trail_enabled = true
 trail_lifetime = 0.06
 process_material = SubResource("ParticleProcessMaterial_7j4rc")

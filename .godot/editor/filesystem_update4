@@ -1,5 +1,4 @@
 res://Game.tscn
-res://Game.gd
+res://world.gd
 res://map.tscn
 res://world.tscn
-res://world.gd
