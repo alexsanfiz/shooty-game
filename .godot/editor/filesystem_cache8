@@ -1,14 +1,14 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1736427554
+::res://::1736790084
 Game.gd::GDScript::-1::1736348080::0::1::::<>Node<>::
-Game.tscn::PackedScene::3302259273578411523::1736357094::0::1::::<><>::res://Game.gd<>uid://dd6jus3let06g::::res://map.tscn<>uid://lwoq7ipbbi17::::res://kenney_particle-pack/PNG (Transparent)/circle_05.png
+Game.tscn::PackedScene::3302259273578411523::1736428234::0::1::::<><>::res://Game.gd<>uid://dd6jus3let06g::::res://map.tscn<>uid://lwoq7ipbbi17::::res://kenney_particle-pack/PNG (Transparent)/circle_05.png
 low-poly_desert_eagle.glb::PackedScene::443826823219971758::1734531498::1734531499::1::::<><>::
 low_poly_ak-47.glb::PackedScene::8740154656279365318::1734359710::1734359710::1::::<><>::
-map.tscn::PackedScene::7434407450362987456::1736357094::0::1::::<><>::
+map.tscn::PackedScene::7434407450362987456::1736428234::0::1::::<><>::
 pause_menu.tscn::PackedScene::7353776522850587334::1736187125::0::1::::<><>::
-world.gd::GDScript::-1::1736357094::0::1::::<>CharacterBody3D<>::
+world.gd::GDScript::-1::1736428234::0::1::::<>CharacterBody3D<>::
 world.gdshader::Shader::-1::1736187106::0::1::::<><>::
-world.tscn::PackedScene::2375563302718136962::1736357095::0::1::::<><>::res://world.gd<>uid://gk8067m4rsly::::res://low-poly_desert_eagle.glb<>uid://dy5yqgn0iubn::::res://kenney_particle-pack/PNG (Transparent)/star_06.png<>uid://dwr2cngtmduuw::::res://low_poly_ak-47.glb
+world.tscn::PackedScene::2375563302718136962::1736428234::0::1::::<><>::res://world.gd<>uid://gk8067m4rsly::::res://low-poly_desert_eagle.glb<>uid://dy5yqgn0iubn::::res://kenney_particle-pack/PNG (Transparent)/star_06.png<>uid://dwr2cngtmduuw::::res://low_poly_ak-47.glb
 ::res://kenney_particle-pack/::1734531455
 License.txt::TextFile::-1::1734531450::0::1::::<><>::
 Preview.png::CompressedTexture2D::3555439027540319020::1734531453::1734531455::1::::<><>::
