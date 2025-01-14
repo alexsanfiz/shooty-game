@@ -209,7 +209,7 @@ func play_AK_reload_effects():
 @rpc("call_local")
 func play_AK_shoot_effects():
 	anim_player.stop()
-	anim_player.play("AK_shoot")
+	anim_player.play("AK_shot")
 	AK_muzzle_flash.restart()
 	AK_muzzle_flash.emitting = true
 
@@ -235,15 +235,11 @@ func _on_animation_player_animation_finished(anim_name):
 		PistolBullets = 8
 		print("reload finished")
 		anim_player.play("pistol_idle")
-	elif anim_name == "pistol_shot":
+	if anim_name == "pistol_shot":
 		print("shot finished")
 		anim_player.play("pistol_idle")
-	elif anim_name == "AK_reload":
+	if anim_name == "AK_reload":
 		AKBullets = 30
 		anim_player.play("AK_idle")
-	elif anim_name == "AK_shot":
-		if Input.is_action_pressed("shoot"):
-			anim_player.play("AK_shot")
-		else:
-			anim_player.play("AK_idle")
-			
+	if anim_name == "AK_shot":
+		anim_player.play("AK_idle")

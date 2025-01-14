@@ -26,12 +26,12 @@ func _on_host_button_pressed():
 	
 	add_player(multiplayer.get_unique_id())
 	
-	upnp_setup()
+	#ADD WHEN USING ONLINE upnp_setup()
 func _on_join_button_pressed():
 	main_Menu.hide()
 	hud.show()
 	
-	enet_peer.create_client(address_entry.text, PORT)
+	enet_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = enet_peer
 	
 
