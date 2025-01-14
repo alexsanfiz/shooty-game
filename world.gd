@@ -40,7 +40,7 @@ func _ready():
 	$MeshInstance3D.rotation.x = deg_to_rad(0)
 	$CollisionShape3D.rotation.x = deg_to_rad(0)
 	slide_dust.emitting = false
-	update_slide_dust.rpc(false)
+	update_slide_dust.rpc(true)
 	current_gun_state = PlayerGunState.pistol
 
 #CAMERA AND MULTIPLAYER AUTHORITY
@@ -176,7 +176,7 @@ func _physics_process(delta):
 	elif input_dir != Vector2.ZERO and is_on_floor() and current_movement_state != PlayerMovementState.Sliding and current_gun_state == PlayerGunState.AK:
 		anim_player.play("AK_walk")
 	elif current_gun_state == PlayerGunState.AK:
-		anim_player.play("pistol_idle")
+		anim_player.play("AK_idle")
 	
 	if Input.is_action_just_pressed("secondary_gun"):
 		current_gun_state = PlayerGunState.pistol
