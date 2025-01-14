@@ -139,7 +139,7 @@ func _physics_process(delta):
 			$CollisionShape3D.rotation.x = deg_to_rad(0)
 			slide_speed = 20
 		else:
-			SPEED = 10
+			SPEED = 8.25
 			current_movement_state = PlayerMovementState.Sprinting
 
 
