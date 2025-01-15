@@ -53,7 +53,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.7, 1.5),
 "transitions": PackedFloat32Array(-2, -2, 0.5),
 "update": 0,
-"values": [Vector3(0, 1.5708, 0), Vector3(0, 1.5708, 0.10472), Vector3(0, 1.5708, 0)]
+"values": [Vector3(0, 1.5708, 0), Vector3(-8.52767e-09, 1.5708, 0.19635), Vector3(0, 1.5708, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -65,7 +65,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.7, 1.5),
 "transitions": PackedFloat32Array(-2, -2, 0.5),
 "update": 0,
-"values": [Vector3(0.412, -0.351, -0.633), Vector3(0.411674, -0.245379, -0.632561), Vector3(0.412, -0.351, -0.633)]
+"values": [Vector3(0.412, -0.351, -0.633), Vector3(0.411674, -0.134254, -0.632561), Vector3(0.412, -0.351, -0.633)]
 }
 
 [sub_resource type="Animation" id="Animation_u56jq"]
@@ -322,12 +322,6 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath("head:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath("head/Camera3D/AK:visible")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-properties/5/path = NodePath("head/Camera3D/pistol:visible")
-properties/5/spawn = true
-properties/5/replication_mode = 1
 
 [sub_resource type="Curve" id="Curve_3xprq"]
 _data = [Vector2(0.120773, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -375,7 +369,6 @@ fov = 80.0
 
 [node name="pistol" parent="head/Camera3D" instance=ExtResource("2_4x1o3")]
 transform = Transform3D(0.000684043, 0, 0.00187939, 0, 0.002, 0, -0.00187939, 0, 0.000684043, 0.5, -0.25, -0.5)
-visible = false
 
 [node name="pistolmuzzleflash" type="GPUParticles3D" parent="head/Camera3D/pistol"]
 transform = Transform3D(0.999999, 0, -2.38419e-07, 0, 0.999998, 0, 2.38419e-07, 0, 0.999999, 158.454, 43.4326, 1.70653)
@@ -391,6 +384,7 @@ draw_pass_1 = SubResource("PlaneMesh_xq5vm")
 
 [node name="AK" parent="head/Camera3D" instance=ExtResource("4_0x2d6")]
 transform = Transform3D(-7.23998e-07, 0, 0.2, 0, 0.2, 0, -0.2, 0, -7.23998e-07, 0.411674, -0.351142, -0.632561)
+visible = false
 
 [node name="AKmuzzleflash" type="GPUParticles3D" parent="head/Camera3D/AK"]
 transform = Transform3D(0.999999, 0, -2.38419e-07, 0, 0.999998, 0, 2.38419e-07, 0, 0.999999, 4.13906, 0.757345, 1.48114)
@@ -413,7 +407,7 @@ collision_mask = 2
 libraries = {
 "": SubResource("AnimationLibrary_76f81")
 }
-autoplay = "pistol_idle"
+autoplay = "AK_idle"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_62bjw")
@@ -422,8 +416,7 @@ replication_config = SubResource("SceneReplicationConfig_62bjw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0701369, 0.349278)
 sorting_offset = 5.0
 amount = 100
-lifetime = 0.18
-explosiveness = 0.2
+lifetime = 0.25
 trail_enabled = true
 trail_lifetime = 0.06
 process_material = SubResource("ParticleProcessMaterial_7j4rc")
