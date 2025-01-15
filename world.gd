@@ -15,8 +15,10 @@ var slide_slow = 0.25
 var double_jumps = 1
 enum PlayerGunState {AK, pistol}
 enum PlayerMovementState {Sliding, Sprinting, Normal}
-var current_gun_state = PlayerGunState.AK
+var current_gun_state = PlayerGunState.pistol
 var current_movement_state = PlayerMovementState.Normal
+var last_shot_time = 0.0
+var shoot_delay = 0.2
 
 @onready var head = $head
 @onready var camera = $head/Camera3D
@@ -24,6 +26,7 @@ var current_movement_state = PlayerMovementState.Normal
 @onready var pistol_muzzle_flash = $head/Camera3D/pistol/pistolmuzzleflash
 @onready var raycast = $head/Camera3D/RayCast3D
 @onready var slide_dust = $slideDust
+@onready var AK_muzzle_flash = $head/Camera3D/AK/AKmuzzleflash
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
@@ -37,8 +40,8 @@ func _ready():
 	$MeshInstance3D.rotation.x = deg_to_rad(0)
 	$CollisionShape3D.rotation.x = deg_to_rad(0)
 	slide_dust.emitting = false
-	update_slide_dust.rpc(false)
-	current_gun_state = PlayerGunState.AK
+	update_slide_dust.rpc(true)
+	current_gun_state = PlayerGunState.pistol
 
 #CAMERA AND MULTIPLAYER AUTHORITY
 func _unhandled_input(event):
@@ -66,15 +69,17 @@ func _unhandled_input(event):
 	if Input.is_action_just_pressed("Reload") and PistolBullets < 8 and anim_player.current_animation != "pistol_reload" and anim_player.current_animation != "pistol_shot" and current_gun_state == PlayerGunState.pistol:
 		play_pistol_reload_effects.rpc()
 		
-	if AKBullets > 0 and anim_player.current_animation != "AK_shot" and anim_player.current_animation != "AK_reload":
-		AKBullets -= 1
-		print("Shooting AK, bullets left: ", AKBullets)  # Debugging
-		play_AK_shoot_effects.rpc()  # Ensure this is called remotely
-		if raycast.is_colliding():
-			var hit_player = raycast.get_collider()
-			if hit_player.has_method("recieve_damage"):
-				hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
-		if AKBullets == 0 and anim_player.current_animation != "AK_reload" and anim_player.current_animation != "AK_shot":
+	if Input.is_action_pressed("shoot") and AKBullets > 0 and current_gun_state == PlayerGunState.AK:
+		if AKBullets > 0 and anim_player.current_animation != "AK_shot" and anim_player.current_animation!= "AK_reload" and last_shot_time >= shoot_delay:
+			last_shot_time = 0.0
+			AKBullets -= 1
+			print("Shooting AK, bullets left: ", AKBullets)  # Debugging
+			play_AK_shoot_effects.rpc()  # Ensure this is called remotely
+			if raycast.is_colliding():
+				var hit_player = raycast.get_collider()
+				if hit_player.has_method("recieve_damage"):
+					hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
+		if AKBullets == 0 and anim_player.current_animation != "AK_reload":
 			play_AK_reload_effects.rpc()
 
 	if Input.is_action_just_pressed("Reload") and AKBullets < 30 and anim_player.current_animation != "AK_reload" and anim_player.current_animation != "AK_shot" and current_gun_state == PlayerGunState.AK:
@@ -82,6 +87,7 @@ func _unhandled_input(event):
 
 #MOVEMENT
 func _physics_process(delta):
+	last_shot_time += delta
 	if not is_multiplayer_authority(): return
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -173,7 +179,7 @@ func _physics_process(delta):
 	elif input_dir != Vector2.ZERO and is_on_floor() and current_movement_state != PlayerMovementState.Sliding and current_gun_state == PlayerGunState.AK:
 		anim_player.play("AK_walk")
 	elif current_gun_state == PlayerGunState.AK:
-		anim_player.play("pistol_idle")
+		anim_player.play("AK_idle")
 	
 	if Input.is_action_just_pressed("secondary_gun"):
 		current_gun_state = PlayerGunState.pistol
@@ -206,11 +212,16 @@ func play_AK_reload_effects():
 @rpc("call_local")
 func play_AK_shoot_effects():
 	anim_player.stop()
-	anim_player.play("AK_shoot")
+	anim_player.play("AK_shot")
+	AK_muzzle_flash.restart()
+	AK_muzzle_flash.emitting = true
 
 @rpc("any_peer")
 func recieve_damage():
-	health -= 35
+	if current_gun_state == PlayerGunState.pistol:
+		health -= 35
+	if current_gun_state == PlayerGunState.AK:
+		health -= 15
 	if health <= 0:
 		health = 100
 		position = Vector3.ZERO
@@ -227,15 +238,11 @@ func _on_animation_player_animation_finished(anim_name):
 		PistolBullets = 8
 		print("reload finished")
 		anim_player.play("pistol_idle")
-	elif anim_name == "pistol_shot":
+	if anim_name == "pistol_shot":
 		print("shot finished")
 		anim_player.play("pistol_idle")
-	elif anim_name == "AK_reload":
+	if anim_name == "AK_reload":
 		AKBullets = 30
 		anim_player.play("AK_idle")
-	elif anim_name == "AK_shot":
-		if Input.is_action_pressed("shoot"):
-			anim_player.play("AK_shot")
-		else:
-			anim_player.play("AK_idle")
-			
+	if anim_name == "AK_shot":
+		anim_player.play("AK_idle")
