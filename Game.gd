@@ -22,10 +22,7 @@ func _on_host_button_pressed():
 	
 	add_player(multiplayer.get_unique_id())
 	
-<<<<<<< HEAD
-=======
-	#ADD WHEN USING ONLINE upnp_setup()
->>>>>>> a40dfb623fad02b7016e222dfd0950b1170c5bfd
+
 func _on_join_button_pressed():
 	main_Menu.hide()
 	hud.show()
