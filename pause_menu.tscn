@@ -19,7 +19,7 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.5, 1),
+"transitions": PackedFloat32Array(0.5, 0.5),
 "update": 0,
 "values": [0.0, 2.5]
 }
@@ -31,9 +31,9 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.5, 1),
+"transitions": PackedFloat32Array(0.5, 0.5),
 "update": 0,
-"values": [0.0, 0.8]
+"values": [1.0, 0.8]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -100,6 +100,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(1, 1, 1, 0)
 script = ExtResource("1_wtkmv")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]

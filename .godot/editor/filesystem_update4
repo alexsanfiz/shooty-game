@@ -6,3 +6,4 @@ res://pause_menu.gd
 res://Game.gd
 res://world.gd
 res://pauseblur.gdshader
+res://pause_menu.gdshader
