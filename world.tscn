@@ -323,6 +323,12 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath("head:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
+properties/4/path = NodePath("head/Camera3D/AK:visible")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("head/Camera3D/pistol:visible")
+properties/5/spawn = true
+properties/5/replication_mode = 1
 
 [sub_resource type="Curve" id="Curve_3xprq"]
 _data = [Vector2(0.120773, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]

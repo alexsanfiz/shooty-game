@@ -40,7 +40,7 @@ func _ready():
 	$MeshInstance3D.rotation.x = deg_to_rad(0)
 	$CollisionShape3D.rotation.x = deg_to_rad(0)
 	slide_dust.emitting = false
-	update_slide_dust.rpc(true)
+	update_slide_dust.rpc(false)
 	current_gun_state = PlayerGunState.pistol
 
 #CAMERA AND MULTIPLAYER AUTHORITY
