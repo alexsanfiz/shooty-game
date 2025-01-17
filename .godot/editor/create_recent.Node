@@ -1,8 +1,10 @@
+PanelContainer
+Label
+TextureRect
+MarginContainer
 AnimationPlayer
 Button
 VBoxContainer
-MarginContainer
-PanelContainer
 CenterContainer
 ColorRect
 LineEdit
@@ -10,6 +12,3 @@ Control
 GPUParticles3D
 Timer
 CSGCylinder3D
-CSGBox3D
-ProgressBar
-RayCast3D

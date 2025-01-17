@@ -50,7 +50,8 @@ func _unhandled_input(event):
 		head.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
-		#deals with pause menu
+
+#deals with pause menu
 	if event.is_action_pressed("ui_cancel"):
 		$PauseMenu.onpress()
 

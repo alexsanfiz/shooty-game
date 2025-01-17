@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://gk8067m4rsly" path="res://low-poly_desert_eagle.glb" id="2_4x1o3"]
 [ext_resource type="Texture2D" uid="uid://dy5yqgn0iubn" path="res://kenney_particle-pack/PNG (Transparent)/star_06.png" id="3_m4fnp"]
 [ext_resource type="PackedScene" uid="uid://dwr2cngtmduuw" path="res://low_poly_ak-47.glb" id="4_0x2d6"]
-[ext_resource type="PackedScene" uid="uid://dc1hvioj857e5" path="res://pause_menu.tscn" id="5_8p33i"]
+[ext_resource type="PackedScene" uid="uid://dc1hvioj857e5" path="res://pause_menu.tscn" id="5_os7xg"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_27bwh"]
 
@@ -424,6 +424,6 @@ process_material = SubResource("ParticleProcessMaterial_7j4rc")
 draw_pass_1 = SubResource("SphereMesh_pcimn")
 draw_skin = SubResource("Skin_7y01f")
 
-[node name="PauseMenu" parent="." instance=ExtResource("5_8p33i")]
+[node name="PauseMenu" parent="." instance=ExtResource("5_os7xg")]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

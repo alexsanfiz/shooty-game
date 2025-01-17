@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6hlyy1i3nu53"]
+
+[ext_resource type="Script" path="res://ammo_count.gd" id="1_lb1st"]
+[ext_resource type="Texture2D" uid="uid://0ixglsx13lrt" path="res://pistolammo.png" id="1_untky"]
+[ext_resource type="Script" path="res://counter.gd" id="2_70gsk"]
+
+[node name="ammo_count" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lb1st")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_left = 9.0
+offset_top = 555.0
+offset_right = 49.0
+offset_bottom = 595.0
+scale = Vector2(1.60184, 2.0289)
+texture = ExtResource("1_untky")
+expand_mode = 2
+
+[node name="ammocount" type="PanelContainer" parent="."]
+offset_left = 86.0
+offset_top = 555.0
+offset_right = 306.0
+offset_bottom = 636.0
+scale = Vector2(0.72001, 1)
+
+[node name="counter" type="Label" parent="ammocount"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_70gsk")

@@ -1,10 +1,12 @@
 res://Game.tscn
 res://map.tscn
 res://world.tscn
+res://pause_menu.tscn
+res://pause_menu.gd
+res://Game.gd
 res://world.gd
-<<<<<<< HEAD
 res://pauseblur.gdshader
 res://pause_menu.gdshader
-=======
-res://pause_menu.tscn
->>>>>>> 2acb7df1e16e7fdfdba9b59856e5f2b2bf9eb607
+res://counter.gd
+res://ammo_count.tscn
+res://ammo_count.gd

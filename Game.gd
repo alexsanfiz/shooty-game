@@ -5,6 +5,7 @@ extends Node
 @onready var name_entry = $CanvasLayer/mainMenu/MarginContainer/VBoxContainer/nameEntry
 @onready var hud = $CanvasLayer/HUD
 @onready var health_bar = $CanvasLayer/HUD/health
+@onready var ammocounter = $CanvasLayer/HUD/ammocount/counter
 
 const Player = preload("res://world.tscn")
 const PORT = 9999
@@ -21,11 +22,9 @@ func _on_host_button_pressed():
 	multiplayer.peer_disconnected.connect(remove_player)
 	
 	add_player(multiplayer.get_unique_id())
-	
-<<<<<<< HEAD
 	#ADD WHEN USING ONLINE upnp_setup()
-=======
->>>>>>> 2acb7df1e16e7fdfdba9b59856e5f2b2bf9eb607
+
+
 
 func _on_join_button_pressed():
 	main_Menu.hide()
@@ -48,8 +47,10 @@ func remove_player(peer_id):
 		player.queue_free()
 
 func update_health_bar(health_value):
-	health_bar.value = health_value
-
+	health_bar.value = health_value 
+	
+func update_ammo_count(ammo):
+	$counter.text = "7"
 
 func _on_multiplayer_spawner_spawned(node):
 	if node.is_multiplayer_authority():
