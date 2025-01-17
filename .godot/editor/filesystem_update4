@@ -1,4 +1,5 @@
 res://Game.tscn
+<<<<<<< HEAD
 res://map.tscn
 res://world.tscn
 res://pause_menu.tscn
@@ -10,3 +11,6 @@ res://pause_menu.gdshader
 res://counter.gd
 res://ammo_count.tscn
 res://ammo_count.gd
+=======
+res://Game.gd
+>>>>>>> f37ef85f31925febb4c257adfff6b6bf25ad6d7c

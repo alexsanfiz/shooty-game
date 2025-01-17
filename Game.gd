@@ -22,17 +22,21 @@ func _on_host_button_pressed():
 	multiplayer.peer_disconnected.connect(remove_player)
 	
 	add_player(multiplayer.get_unique_id())
+<<<<<<< HEAD
 	#ADD WHEN USING ONLINE upnp_setup()
 
 
+=======
+	
+>>>>>>> f37ef85f31925febb4c257adfff6b6bf25ad6d7c
 
 func _on_join_button_pressed():
 	main_Menu.hide()
 	hud.show()
 	
-	enet_peer.create_client("localhost", PORT)
+	enet_peer.create_client(address_entry.text, PORT)
 	multiplayer.multiplayer_peer = enet_peer
-	
+	upnp_setup()
 
 func add_player(peer_id):
 	var player = Player.instantiate()
