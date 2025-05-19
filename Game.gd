@@ -13,7 +13,6 @@ var enet_peer = ENetMultiplayerPeer.new()
 func _on_host_button_pressed():
 	main_Menu.hide()
 	hud.show()
-	upnp_setup()
 	enet_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = enet_peer
 	multiplayer.peer_connected.connect(add_player)
@@ -26,9 +25,8 @@ func _on_join_button_pressed():
 	main_Menu.hide()
 	hud.show()
 	
-	enet_peer.create_client(address_entry.text, PORT)
+	enet_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = enet_peer
-	upnp_setup()
 
 func add_player(peer_id):
 	var player = Player.instantiate()

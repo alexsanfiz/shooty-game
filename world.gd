@@ -8,14 +8,15 @@ const SENSITIVITY = 0.0015
 var gravity = 10.0
 var PistolBullets = 8
 var AKBullets = 30
+var ShotgunBullets = 2
 var health = 100
 var slide_speed = 20.0  # Speed during slide
 var slide_direction = Vector3.ZERO  # Store the direction during the slide
 var slide_slow = 0.25
 var double_jumps = 1
-enum PlayerGunState {AK, pistol}
+enum PlayerGunState {AK, pistol, shotgun}
 enum PlayerMovementState {Sliding, Sprinting, Normal}
-var current_gun_state = PlayerGunState.pistol
+var current_gun_state = PlayerGunState.shotgun
 var current_movement_state = PlayerMovementState.Normal
 var last_shot_time = 0.0
 var shoot_delay = 0.2
@@ -41,7 +42,7 @@ func _ready():
 	$CollisionShape3D.rotation.x = deg_to_rad(0)
 	slide_dust.emitting = false
 	update_slide_dust.rpc(false)
-	current_gun_state = PlayerGunState.pistol
+	current_gun_state = PlayerGunState.shotgun
 
 #CAMERA AND MULTIPLAYER AUTHORITY
 func _unhandled_input(event):
@@ -84,6 +85,20 @@ func _unhandled_input(event):
 
 	if Input.is_action_just_pressed("Reload") and AKBullets < 30 and anim_player.current_animation != "AK_reload" and anim_player.current_animation != "AK_shot" and current_gun_state == PlayerGunState.AK:
 		play_AK_reload_effects.rpc()
+		
+	if Input.is_action_just_pressed("shoot") and current_gun_state == PlayerGunState.shotgun:
+		if ShotgunBullets > 0 and anim_player.current_animation != "shotgun_shot" and anim_player.current_animation != "shotgun_reload":
+			ShotgunBullets -= 1
+			play_shotgun_shoot_effects.rpc()
+			if raycast.is_colliding():
+				var hit_player = raycast.get_collider()
+				if hit_player.has_method("recieve_damage"):
+					hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
+		if ShotgunBullets == 0 and anim_player.current_animation != "shotgun_reload" and anim_player.current_animation != "shotgun_shot":
+			play_shotgun_reload_effects.rpc()
+
+	if Input.is_action_just_pressed("Reload") and ShotgunBullets < 8 and anim_player.current_animation != "shotgun_reload" and anim_player.current_animation != "shotgun_shot" and current_gun_state == PlayerGunState.shotgun:
+		play_shotgun_reload_effects.rpc()
 
 #MOVEMENT
 func _physics_process(delta):
@@ -153,7 +168,7 @@ func _physics_process(delta):
 
 
 	if Input.is_action_just_released("Sprint"):
-		SPEED = 6.5
+		SPEED = 7.5
 		current_movement_state == PlayerMovementState.Normal
 	
 	if Input.is_action_just_pressed("slide"):
@@ -180,11 +195,19 @@ func _physics_process(delta):
 		anim_player.play("AK_walk")
 	elif current_gun_state == PlayerGunState.AK:
 		anim_player.play("AK_idle")
+	elif anim_player.current_animation == "shotgun_shot":
+		pass
+	elif anim_player.current_animation == "shotgun_reload":
+		pass
+	elif input_dir != Vector2.ZERO and is_on_floor() and current_movement_state != PlayerMovementState.Sliding and current_gun_state == PlayerGunState.shotgun:
+		anim_player.play("shotgun_walk")
+	elif current_gun_state == PlayerGunState.shotgun:
+		anim_player.play("shotgun_idle")
 	
 	if Input.is_action_just_pressed("secondary_gun"):
-		current_gun_state = PlayerGunState.pistol
-		$head/Camera3D/pistol.show()
-		$head/Camera3D/AK.hide()
+		current_gun_state = PlayerGunState.shotgun
+		$head/Camera3D/Shotgun.show()
+		$head/Camera3D/pistol.hide()
 	if Input.is_action_just_pressed("primary_gun"):
 		current_gun_state = PlayerGunState.AK
 		$head/Camera3D/AK.show()
@@ -215,6 +238,18 @@ func play_AK_shoot_effects():
 	anim_player.play("AK_shot")
 	AK_muzzle_flash.restart()
 	AK_muzzle_flash.emitting = true
+
+@rpc("call_local")
+func play_shotgun_shoot_effects():
+	anim_player.stop()
+	anim_player.play("shotgun_shot")
+	shotgun_muzzle_flash.restart()
+	shotgun_muzzle_flash.emitting = true
+	
+@rpc("call_local")
+func play_shotgun_reload_effects():
+	anim_player.stop()
+	anim_player.play("shotgun_reload")
 
 @rpc("any_peer")
 func recieve_damage():
