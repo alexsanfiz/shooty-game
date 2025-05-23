@@ -25,9 +25,10 @@ var shoot_delay = 0.2
 @onready var camera = $head/Camera3D
 @onready var anim_player = $AnimationPlayer
 @onready var pistol_muzzle_flash = $head/Camera3D/pistol/pistolmuzzleflash
-@onready var raycast = $head/Camera3D/RayCast3D
+@onready var raycast = $head/RayCast3D 
 @onready var slide_dust = $slideDust
 @onready var AK_muzzle_flash = $head/Camera3D/AK/AKmuzzleflash
+@onready var shotgun_muzzle_flash = $head/Camera3D/Shotgun/shotgunmuzzleflash
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
@@ -97,7 +98,7 @@ func _unhandled_input(event):
 		if ShotgunBullets == 0 and anim_player.current_animation != "shotgun_reload" and anim_player.current_animation != "shotgun_shot":
 			play_shotgun_reload_effects.rpc()
 
-	if Input.is_action_just_pressed("Reload") and ShotgunBullets < 8 and anim_player.current_animation != "shotgun_reload" and anim_player.current_animation != "shotgun_shot" and current_gun_state == PlayerGunState.shotgun:
+	if Input.is_action_just_pressed("Reload") and ShotgunBullets < 2 and anim_player.current_animation != "shotgun_reload" and anim_player.current_animation != "shotgun_shot" and current_gun_state == PlayerGunState.shotgun:
 		play_shotgun_reload_effects.rpc()
 
 #MOVEMENT
@@ -211,7 +212,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("primary_gun"):
 		current_gun_state = PlayerGunState.AK
 		$head/Camera3D/AK.show()
-		$head/Camera3D/pistol.hide()
+		$head/Camera3D/Shotgun.hide()
 	move_and_slide()
 
 #MULTIPLAYER UPDATES
@@ -281,3 +282,6 @@ func _on_animation_player_animation_finished(anim_name):
 		anim_player.play("AK_idle")
 	if anim_name == "AK_shot":
 		anim_player.play("AK_idle")
+	if anim_name == "shotgun_reload":
+		ShotgunBullets = 2
+		anim_player.play("shotgun_idle")
