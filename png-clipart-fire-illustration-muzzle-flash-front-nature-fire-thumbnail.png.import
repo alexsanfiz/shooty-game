@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba3a7wwhyiu65"
-path.s3tc="res://.godot/imported/star_01.png-6b9ae2c33b29b99d2f6a036af331f26a.s3tc.ctex"
+uid="uid://cy6xe2wfitunc"
+path.s3tc="res://.godot/imported/png-clipart-fire-illustration-muzzle-flash-front-nature-fire-thumbnail.png-e9ebdbe0b11823531369670057c37fcd.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://kenney_particle-pack/PNG (Transparent)/star_01.png"
-dest_files=["res://.godot/imported/star_01.png-6b9ae2c33b29b99d2f6a036af331f26a.s3tc.ctex"]
+source_file="res://png-clipart-fire-illustration-muzzle-flash-front-nature-fire-thumbnail.png"
+dest_files=["res://.godot/imported/png-clipart-fire-illustration-muzzle-flash-front-nature-fire-thumbnail.png-e9ebdbe0b11823531369670057c37fcd.s3tc.ctex"]
 
 [params]
 

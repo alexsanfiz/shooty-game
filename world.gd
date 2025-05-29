@@ -20,12 +20,13 @@ var current_gun_state = PlayerGunState.shotgun
 var current_movement_state = PlayerMovementState.Normal
 var last_shot_time = 0.0
 var shoot_delay = 0.2
+var kill_count = 0
 
 @onready var head = $head
 @onready var camera = $head/Camera3D
 @onready var anim_player = $AnimationPlayer
 @onready var pistol_muzzle_flash = $head/Camera3D/pistol/pistolmuzzleflash
-@onready var raycast = $head/RayCast3D 
+@onready var raycast = $head/Camera3D/RayCast3D 
 @onready var slide_dust = $slideDust
 @onready var AK_muzzle_flash = $head/Camera3D/AK/AKmuzzleflash
 @onready var shotgun_muzzle_flash = $head/Camera3D/Shotgun/shotgunmuzzleflash
