@@ -91,13 +91,22 @@ func _unhandled_input(event):
 	if Input.is_action_just_pressed("shoot") and current_gun_state == PlayerGunState.shotgun:
 		if ShotgunBullets > 0 and anim_player.current_animation != "shotgun_shot" and anim_player.current_animation != "shotgun_reload":
 			ShotgunBullets -= 1
-			play_shotgun_shoot_effects.rpc()
-			if raycast.is_colliding():
-				var hit_player = raycast.get_collider()
-				if hit_player.has_method("recieve_damage"):
-					hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
-		if ShotgunBullets == 0 and anim_player.current_animation != "shotgun_reload" and anim_player.current_animation != "shotgun_shot":
-			play_shotgun_reload_effects.rpc()
+			var pellets = 10
+			var max_x = 3.0
+			var max_y = 5.0
+			var origin = global_transform.origin
+			while pellets > 0:
+				play_shotgun_shoot_effects.rpc()
+				pellets-=1
+				var random_offset = Vector3(randf_range(-max_x, max_x), randf_range(-max_y, max_y), 50).normalized()
+				var target_position = random_offset
+				if raycast.is_colliding():
+					var hit_player = raycast.get_collider()
+					if hit_player.has_method("recieve_damage"):
+						hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
+				if ShotgunBullets == 0 and anim_player.current_animation != "shotgun_reload" and anim_player.current_animation != "shotgun_shot":
+					play_shotgun_reload_effects.rpc()
+			pellets = 10
 
 	if Input.is_action_just_pressed("Reload") and ShotgunBullets < 2 and anim_player.current_animation != "shotgun_reload" and anim_player.current_animation != "shotgun_shot" and current_gun_state == PlayerGunState.shotgun:
 		play_shotgun_reload_effects.rpc()
@@ -209,7 +218,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("secondary_gun"):
 		current_gun_state = PlayerGunState.shotgun
 		$head/Camera3D/Shotgun.show()
-		$head/Camera3D/pistol.hide()
+		$head/Camera3D/AK.hide()
 	if Input.is_action_just_pressed("primary_gun"):
 		current_gun_state = PlayerGunState.AK
 		$head/Camera3D/AK.show()

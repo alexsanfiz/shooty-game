@@ -1,21 +1,21 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1748532230
+::res://::1748623068
 export_presets.cfg::TextFile::-1::1737168610::0::1::::<><>::
 Game.gd::GDScript::-1::1737641792::0::1::::<>Node<>::
-Game.tscn::PackedScene::3302259273578411523::1748532230::0::1::::<><>::res://Game.gd<>uid://dd6jus3let06g::::res://map.tscn<>uid://lwoq7ipbbi17::::res://kenney_particle-pack/PNG (Transparent)/circle_05.png
+Game.tscn::PackedScene::3302259273578411523::1748619404::0::1::::<><>::res://Game.gd<>uid://dd6jus3let06g::::res://map.tscn<>uid://lwoq7ipbbi17::::res://kenney_particle-pack/PNG (Transparent)/circle_05.png
 low-poly_desert_eagle.glb::PackedScene::443826823219971758::1734535098::1734535099::1::::<><>::
 low-poly_fox_sterlingworth_philly.glb::PackedScene::3385583855259169861::1737641127::1737641128::1::::<><>::
 low_poly_ak-47.glb::PackedScene::8740154656279365318::1734363310::1734363310::1::::<><>::
-map.tscn::PackedScene::7434407450362987456::1748532229::0::1::::<><>::
+map.tscn::PackedScene::7434407450362987456::1748619404::0::1::::<><>::
 pauseblur.gdshader::Shader::-1::1737050664::0::1::::<><>::
 pause_menu.gd::GDScript::-1::1737078324::0::1::::<>ColorRect<>::
 pause_menu.gdshader::Shader::-1::1737050664::0::1::::<><>::
-pause_menu.tscn::PackedScene::7353776522850587334::1748532230::0::1::::<><>::res://pauseblur.gdshader<>res://pause_menu.gd
+pause_menu.tscn::PackedScene::7353776522850587334::1748619404::0::1::::<><>::res://pauseblur.gdshader<>res://pause_menu.gd
 png-clipart-fire-illustration-muzzle-flash-front-nature-fire-thumbnail.png::CompressedTexture2D::6522774411438869828::1748531788::1748531838::1::::<><>::
 pngtree-muzzle-flash-images-vector-png-png-image_8377286.png::CompressedTexture2D::8743007695063498391::1748532079::1748532121::1::::<><>::
-world.gd::GDScript::-1::1748531101::0::1::::<>CharacterBody3D<>::
+world.gd::GDScript::-1::1748609472::0::1::::<>CharacterBody3D<>::
 world.gdshader::Shader::-1::1736190706::0::1::::<><>::
-world.tscn::PackedScene::2375563302718136962::1748532230::0::1::::<><>::res://world.gd<>uid://gk8067m4rsly::::res://low-poly_desert_eagle.glb<>uid://cy6xe2wfitunc::::res://png-clipart-fire-illustration-muzzle-flash-front-nature-fire-thumbnail.png<>uid://dwr2cngtmduuw::::res://low_poly_ak-47.glb<>uid://dc1hvioj857e5::::res://pause_menu.tscn<>uid://boiacournokuv::::res://low-poly_fox_sterlingworth_philly.glb<>uid://bmehagwp8ylvs::::res://kenney_particle-pack/PNG (Transparent)/star_02.png
+world.tscn::PackedScene::2375563302718136962::1748619404::0::1::::<><>::res://world.gd<>uid://gk8067m4rsly::::res://low-poly_desert_eagle.glb<>uid://ba3a7wwhyiu65::::res://kenney_particle-pack/PNG (Transparent)/star_01.png<>uid://dwr2cngtmduuw::::res://low_poly_ak-47.glb<>uid://dc1hvioj857e5::::res://pause_menu.tscn<>uid://boiacournokuv::::res://low-poly_fox_sterlingworth_philly.glb
 ::res://kenney_particle-pack/::1734535055
 License.txt::TextFile::-1::1734535050::0::1::::<><>::
 Preview.png::CompressedTexture2D::3555439027540319020::1734535053::1734535055::1::::<><>::
@@ -117,7 +117,7 @@ trace_04_rotated.png::CompressedTexture2D::6478814913836651760::1734535051::1734
 trace_05_rotated.png::CompressedTexture2D::950240697113702935::1734535051::1734535056::1::::<><>::
 trace_06_rotated.png::CompressedTexture2D::2511074318927114517::1734535051::1734535056::1::::<><>::
 trace_07_rotated.png::CompressedTexture2D::4653007892070127057::1734535051::1734535056::1::::<><>::
-::res://kenney_particle-pack/PNG (Transparent)/::1748531808
+::res://kenney_particle-pack/PNG (Transparent)/::1748532387
 circle_01.png::CompressedTexture2D::9033059676917073282::1734535051::1734535054::1::::<><>::
 circle_02.png::CompressedTexture2D::7372624774074807582::1734535051::1734535054::1::::<><>::
 circle_03.png::CompressedTexture2D::4679844252132036671::1734535051::1734535054::1::::<><>::

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://830gexhsulss"]
+[gd_scene load_steps=40 format=3 uid="uid://830gexhsulss"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_jgjkb"]
 [ext_resource type="PackedScene" uid="uid://gk8067m4rsly" path="res://low-poly_desert_eagle.glb" id="2_4x1o3"]
@@ -41,12 +41,26 @@ material = SubResource("StandardMaterial3D_1q5lj")
 size = Vector2(0.5, 0.5)
 orientation = 2
 
+[sub_resource type="Gradient" id="Gradient_vmaet"]
+offsets = PackedFloat32Array(0, 0.178571, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h5e2f"]
+gradient = SubResource("Gradient_vmaet")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3nn85"]
+color_ramp = SubResource("GradientTexture1D_h5e2f")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_33rve"]
 transparency = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.972549, 0.792157, 0.435294, 1)
 albedo_texture = ExtResource("3_xd0dt")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_iu3g2"]
 lightmap_size_hint = Vector2i(12, 12)
@@ -528,6 +542,7 @@ fov = 80.0
 
 [node name="pistol" parent="head/Camera3D" instance=ExtResource("2_4x1o3")]
 transform = Transform3D(0.000684043, 0, 0.00187939, 0, 0.002, 0, -0.00187939, 0, 0.000684043, 0.5, -0.25, -0.5)
+visible = false
 
 [node name="pistolmuzzleflash" type="GPUParticles3D" parent="head/Camera3D/pistol"]
 transform = Transform3D(0.999999, 0, -2.38419e-07, 0, 0.999998, 0, 2.38419e-07, 0, 0.999999, 158.454, 43.4326, 1.70653)
@@ -561,12 +576,17 @@ draw_pass_1 = SubResource("PlaneMesh_xq5vm")
 transform = Transform3D(0.410035, -0.0191855, 3.22221, 0.0523433, 1.28478, 0, -1.12656, 0.0527117, 1.17279, 0.610423, -0.200376, -0.537995)
 
 [node name="shotgunmuzzleflash" type="GPUParticles3D" parent="head/Camera3D/Shotgun"]
-transform = Transform3D(2.04891e-08, 0.764138, -0.13738, 0.395366, -7.45058e-09, 0, -2.56114e-09, -0.134738, -0.779118, 0.583146, 0.0661694, 8.77976e-05)
+transform = Transform3D(2.23517e-08, 0.764138, -0.13738, 0.395366, -1.11759e-08, -3.72529e-09, -2.56114e-09, -0.134738, -0.779118, 0.583146, 0.0661694, 8.77902e-05)
+visible = false
+emitting = false
 amount = 2
-lifetime = 0.75
-explosiveness = 0.5
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.25
+randomness = 0.25
 visibility_aabb = AABB(-4, -3.87402, -4, 8, 8, 8)
 local_coords = true
+process_material = SubResource("ParticleProcessMaterial_3nn85")
 draw_pass_1 = SubResource("PlaneMesh_iu3g2")
 
 [node name="RayCast3D" type="RayCast3D" parent="head/Camera3D"]
