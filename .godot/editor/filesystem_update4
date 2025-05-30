@@ -1,5 +1,12 @@
+res://Game.tscn
 res://map.tscn
 res://world.tscn
 res://pause_menu.tscn
-res://Game.tscn
+res://pause_menu.gd
+res://Game.gd
 res://world.gd
+res://pauseblur.gdshader
+res://pause_menu.gdshader
+res://counter.gd
+res://ammo_count.tscn
+res://ammo_count.gd
