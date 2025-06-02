@@ -28,9 +28,8 @@ func _on_join_button_pressed():
 	main_Menu.hide()
 	hud.show()
 	
-	enet_peer.create_client(address_entry.text, PORT)
+	enet_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = enet_peer
-	upnp_setup()
 
 func add_player(peer_id):
 	var player = Player.instantiate()
@@ -67,3 +66,7 @@ func upnp_setup():
 	
 	print("Success! Join Address: %s" % upnp.query_external_address())
 	
+
+
+func _on_weapon_select_pressed():
+	pass

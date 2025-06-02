@@ -8,12 +8,13 @@ const SENSITIVITY = 0.0015
 var gravity = 10.0
 var PistolBullets = 8
 var AKBullets = 30
+var ShotgunBullets = 2
 var health = 100
 var slide_speed = 20.0  # Speed during slide
 var slide_direction = Vector3.ZERO  # Store the direction during the slide
 var slide_slow = 0.25
 var double_jumps = 1
-enum PlayerGunState {AK, pistol}
+enum PlayerGunState {AK, pistol, shotgun, katana}
 enum PlayerMovementState {Sliding, Sprinting, Normal}
 var current_gun_state = PlayerGunState.pistol
 var current_movement_state = PlayerMovementState.Normal
@@ -27,6 +28,7 @@ var shoot_delay = 0.2
 @onready var raycast = $head/Camera3D/RayCast3D
 @onready var slide_dust = $slideDust
 @onready var AK_muzzle_flash = $head/Camera3D/AK/AKmuzzleflash
+@onready var shotgun_muzzle_flash = $head/Camera3D/Shotgun/shotgunmuzzleflash
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
@@ -85,7 +87,40 @@ func _unhandled_input(event):
 
 	if Input.is_action_just_pressed("Reload") and AKBullets < 30 and anim_player.current_animation != "AK_reload" and anim_player.current_animation != "AK_shot" and current_gun_state == PlayerGunState.AK:
 		play_AK_reload_effects.rpc()
+	
+	
+	if Input.is_action_just_pressed("shoot") and current_gun_state == PlayerGunState.shotgun:
+		if ShotgunBullets > 0 and anim_player.current_animation != "shotgun_shot" and anim_player.current_animation != "shotgun_reload":
+			ShotgunBullets -= 1
+			var pellets = 10
+			var max_x = 3.0
+			var max_y = 5.0
+			var origin = global_transform.origin
+			play_shotgun_shoot_effects.rpc()
+			while pellets > 0:
+				pellets -= 1
+				var spread = Vector3(randf_range(-max_x, max_x), randf_range(-max_y, max_y), -1).normalized()
+				var from = camera.global_transform.origin
+				var to = from + (camera.global_transform.basis.z + spread) * 100
 
+				var space_state = get_world_3d().direct_space_state
+				var params = PhysicsRayQueryParameters3D.create(from, to)
+				params.exclude = [self]
+				params.collision_mask = 2
+				var result = space_state.intersect_ray(params)
+
+				if result:
+					var hit_player = result.collider
+					if hit_player and hit_player.has_method("recieve_damage"):
+						hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
+			pellets = 10
+		if ShotgunBullets == 0 and anim_player.current_animation != "shotgun_reload" and anim_player.current_animation != "shotgun_shot":
+			play_shotgun_reload_effects.rpc()
+			
+	if Input.is_action_just_pressed("shoot") and current_gun_state == PlayerGunState.katana:
+		if anim_player.current_animation != "katana_slice":
+			play_katana_slice_effects()
+		
 #MOVEMENT
 func _physics_process(delta):
 	last_shot_time += delta
@@ -181,15 +216,32 @@ func _physics_process(delta):
 		anim_player.play("AK_walk")
 	elif current_gun_state == PlayerGunState.AK:
 		anim_player.play("AK_idle")
+	elif anim_player.current_animation == "shotgun_shot":
+		pass
+	elif anim_player.current_animation == "shotgun_reload":
+		pass
+	elif input_dir != Vector2.ZERO and is_on_floor() and current_movement_state != PlayerMovementState.Sliding and current_gun_state == PlayerGunState.shotgun:
+		anim_player.play("shotgun_walk")
+	elif current_gun_state == PlayerGunState.shotgun:
+		anim_player.play("shotgun_idle")
 	
 	if Input.is_action_just_pressed("secondary_gun"):
-		current_gun_state = PlayerGunState.pistol
-		$head/Camera3D/pistol.show()
+		current_gun_state = PlayerGunState.shotgun
+		$head/Camera3D/Shotgun.show()
 		$head/Camera3D/AK.hide()
+		$head/Camera3D/pistol.hide()
+		
 	if Input.is_action_just_pressed("primary_gun"):
 		current_gun_state = PlayerGunState.AK
 		$head/Camera3D/AK.show()
+		$head/Camera3D/Shotgun.hide()
 		$head/Camera3D/pistol.hide()
+	
+	if Input.is_action_just_pressed("third_gun"):
+		current_gun_state = PlayerGunState.pistol
+		$head/Camera3D/pistol.show()
+		$head/Camera3D/AK.hide()
+		$head/Camera3D/Shotgun.hide()
 	move_and_slide()
 
 #MULTIPLAYER UPDATES
@@ -216,6 +268,23 @@ func play_AK_shoot_effects():
 	anim_player.play("AK_shot")
 	AK_muzzle_flash.restart()
 	AK_muzzle_flash.emitting = true
+
+@rpc("call_local")
+func play_shotgun_shoot_effects():
+	anim_player.stop()
+	anim_player.play("shotgun_shot")
+	shotgun_muzzle_flash.restart()
+	shotgun_muzzle_flash.emitting = true
+	
+@rpc("call_local")
+func play_shotgun_reload_effects():
+	anim_player.stop()
+	anim_player.play("shotgun_reload")
+	
+@rpc("call_local")
+func play_katana_slice_effects():
+	anim_player.stop()
+	anim_player.play("katana_slice")
 
 @rpc("any_peer")
 func recieve_damage():
@@ -247,3 +316,10 @@ func _on_animation_player_animation_finished(anim_name):
 		anim_player.play("AK_idle")
 	if anim_name == "AK_shot":
 		anim_player.play("AK_idle")
+	if anim_name == "shotgun_shot":
+		anim_player.play("shotgun_idle")
+	if anim_name == "shotgun_reload":
+		ShotgunBullets = 2
+		anim_player.play("shotgun_idle")
+	
+		

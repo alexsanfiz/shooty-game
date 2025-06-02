@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bnbvy0ki4y8dj"]
+[gd_scene load_steps=7 format=3 uid="uid://bnbvy0ki4y8dj"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_rnum5"]
 [ext_resource type="PackedScene" uid="uid://dd6jus3let06g" path="res://map.tscn" id="2_01u6p"]
 [ext_resource type="Texture2D" uid="uid://lwoq7ipbbi17" path="res://kenney_particle-pack/PNG (Transparent)/circle_05.png" id="3_30d5q"]
+
+[sub_resource type="Theme" id="Theme_oi4bi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8ckt"]
 bg_color = Color(0.89, 0, 0, 1)
@@ -53,11 +55,6 @@ layout_mode = 2
 text = "Main Menu"
 horizontal_alignment = 1
 
-[node name="nameEntry" type="LineEdit" parent="CanvasLayer/mainMenu/MarginContainer/VBoxContainer"]
-layout_mode = 2
-placeholder_text = "Enter Name Here"
-alignment = 1
-
 [node name="hostButton" type="Button" parent="CanvasLayer/mainMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Host"
@@ -70,6 +67,11 @@ text = "Join"
 layout_mode = 2
 placeholder_text = "Enter Address to Join Here"
 alignment = 1
+
+[node name="weaponSelect" type="Button" parent="CanvasLayer/mainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_oi4bi")
+text = "Select Spawn Weapon"
 
 [node name="HUD" type="Control" parent="CanvasLayer"]
 visible = false
@@ -115,4 +117,5 @@ spawn_path = NodePath("..")
 
 [connection signal="pressed" from="CanvasLayer/mainMenu/MarginContainer/VBoxContainer/hostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/mainMenu/MarginContainer/VBoxContainer/joinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/mainMenu/MarginContainer/VBoxContainer/weaponSelect" to="." method="_on_weapon_select_pressed"]
 [connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]
