@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bnbvy0ki4y8dj"]
+[gd_scene load_steps=6 format=3 uid="uid://bnbvy0ki4y8dj"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_rnum5"]
 [ext_resource type="PackedScene" uid="uid://dd6jus3let06g" path="res://map.tscn" id="2_01u6p"]
-[ext_resource type="Texture2D" uid="uid://lwoq7ipbbi17" path="res://kenney_particle-pack/PNG (Transparent)/circle_05.png" id="3_30d5q"]
 
 [sub_resource type="Theme" id="Theme_oi4bi"]
 
@@ -82,18 +81,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.03, 0.03)
-pivot_offset = Vector2(576, 324)
-texture = ExtResource("3_30d5q")
-stretch_mode = 5
 
 [node name="health" type="ProgressBar" parent="CanvasLayer/HUD"]
 layout_mode = 1

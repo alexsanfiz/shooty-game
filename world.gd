@@ -18,17 +18,20 @@ enum PlayerGunState {AK, pistol, shotgun, katana}
 enum PlayerMovementState {Sliding, Sprinting, Normal}
 var current_gun_state = PlayerGunState.pistol
 var current_movement_state = PlayerMovementState.Normal
-var last_shot_time = 0.0
-var shoot_delay = 0.2
+var canShoot = true
+var ShotgunSpread = 6.5
 
 @onready var head = $head
 @onready var camera = $head/Camera3D
 @onready var anim_player = $AnimationPlayer
 @onready var pistol_muzzle_flash = $head/Camera3D/pistol/pistolmuzzleflash
-@onready var raycast = $head/Camera3D/RayCast3D
+@onready var raycast = $head/Camera3D/RayContainer/RayCast3D1
 @onready var slide_dust = $slideDust
 @onready var AK_muzzle_flash = $head/Camera3D/AK/AKmuzzleflash
 @onready var shotgun_muzzle_flash = $head/Camera3D/Shotgun/shotgunmuzzleflash
+@onready var katana_collision = $head/Camera3D/Katana/Area3D
+@onready var ray_container = $head/Camera3D/RayContainer
+@onready var AK_timer = $Timer
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
@@ -43,7 +46,10 @@ func _ready():
 	$CollisionShape3D.rotation.x = deg_to_rad(0)
 	slide_dust.emitting = false
 	update_slide_dust.rpc(true)
-	current_gun_state = PlayerGunState.pistol
+	current_gun_state = PlayerGunState.katana
+	anim_player.speed_scale = 1.0
+
+
 
 #CAMERA AND MULTIPLAYER AUTHORITY
 func _unhandled_input(event):
@@ -65,65 +71,40 @@ func _unhandled_input(event):
 			if raycast.is_colliding():
 				var hit_player = raycast.get_collider()
 				if hit_player.has_method("recieve_damage"):
-					hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
+					hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority(), 35)
 		if PistolBullets == 0 and anim_player.current_animation != "pistol_reload" and anim_player.current_animation != "pistol_shot":
 			play_pistol_reload_effects.rpc()
 
 	if Input.is_action_just_pressed("Reload") and PistolBullets < 8 and anim_player.current_animation != "pistol_reload" and anim_player.current_animation != "pistol_shot" and current_gun_state == PlayerGunState.pistol:
 		play_pistol_reload_effects.rpc()
-		
-	if Input.is_action_pressed("shoot") and AKBullets > 0 and current_gun_state == PlayerGunState.AK:
-		if AKBullets > 0 and anim_player.current_animation != "AK_shot" and anim_player.current_animation!= "AK_reload" and last_shot_time >= shoot_delay:
-			last_shot_time = 0.0
-			AKBullets -= 1
-			print("Shooting AK, bullets left: ", AKBullets)  # Debugging
-			play_AK_shoot_effects.rpc()  # Ensure this is called remotely
-			if raycast.is_colliding():
-				var hit_player = raycast.get_collider()
-				if hit_player.has_method("recieve_damage"):
-					hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
-		if AKBullets == 0 and anim_player.current_animation != "AK_reload":
-			play_AK_reload_effects.rpc()
-
-	if Input.is_action_just_pressed("Reload") and AKBullets < 30 and anim_player.current_animation != "AK_reload" and anim_player.current_animation != "AK_shot" and current_gun_state == PlayerGunState.AK:
-		play_AK_reload_effects.rpc()
-	
 	
 	if Input.is_action_just_pressed("shoot") and current_gun_state == PlayerGunState.shotgun:
 		if ShotgunBullets > 0 and anim_player.current_animation != "shotgun_shot" and anim_player.current_animation != "shotgun_reload":
-			ShotgunBullets -= 1
-			var pellets = 10
-			var max_x = 3.0
-			var max_y = 5.0
-			var origin = global_transform.origin
-			play_shotgun_shoot_effects.rpc()
-			while pellets > 0:
-				pellets -= 1
-				var spread = Vector3(randf_range(-max_x, max_x), randf_range(-max_y, max_y), -1).normalized()
-				var from = camera.global_transform.origin
-				var to = from + (camera.global_transform.basis.z + spread) * 100
-
-				var space_state = get_world_3d().direct_space_state
-				var params = PhysicsRayQueryParameters3D.create(from, to)
-				params.exclude = [self]
-				params.collision_mask = 2
-				var result = space_state.intersect_ray(params)
-
-				if result:
-					var hit_player = result.collider
-					if hit_player and hit_player.has_method("recieve_damage"):
-						hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
-			pellets = 10
-		if ShotgunBullets == 0 and anim_player.current_animation != "shotgun_reload" and anim_player.current_animation != "shotgun_shot":
-			play_shotgun_reload_effects.rpc()
+			play_shotgun_shoot_effects()
+			ShotgunBullets-=1
+			for r in ray_container.get_children():
+				r.target_position.x = randf_range(-ShotgunSpread, ShotgunSpread)
+				r.target_position.y = randf_range(-ShotgunSpread, ShotgunSpread)
+				if r.is_colliding():
+					var hit_player = r.get_collider()
+					if hit_player.has_method("recieve_damage"):
+						hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority(), 10)
+		elif ShotgunBullets <= 0 and anim_player.current_animation != "shotgun_reload":
+			play_shotgun_reload_effects()
+	if Input.is_action_just_pressed("Reload") and ShotgunBullets < 2 and anim_player.current_animation != "shotgun_shot" and anim_player.current_animation != "shotgun_reload" and current_gun_state == PlayerGunState.shotgun:
+		play_shotgun_reload_effects.rpc()
 			
-	if Input.is_action_just_pressed("shoot") and current_gun_state == PlayerGunState.katana:
+	if Input.is_action_pressed("shoot") and current_gun_state == PlayerGunState.katana:
 		if anim_player.current_animation != "katana_slice":
-			play_katana_slice_effects()
-		
+			play_katana_slice_effects.rpc()
+
+func apply_katana_damage():
+	print("Damage function called")
+	for body in katana_collision.get_overlapping_bodies():
+		if body.has_method("recieve_damage"):
+			body.recieve_damage.rpc_id(body.get_multiplayer_authority(), 50)
 #MOVEMENT
 func _physics_process(delta):
-	last_shot_time += delta
 	if not is_multiplayer_authority(): return
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -198,6 +179,22 @@ func _physics_process(delta):
 			slide_direction = direction
 			velocity.x = slide_direction.x * slide_speed
 			velocity.z = slide_direction.z * slide_speed
+			
+	if Input.is_action_pressed("shoot") and current_gun_state == PlayerGunState.AK:
+		if AKBullets > 0 and anim_player.current_animation!= "AK_reload" and anim_player.current_animation != "AK_shot" and canShoot:
+			AKBullets -= 1
+			print("Shooting AK, bullets left: ", AKBullets)  # Debugging
+			play_AK_shoot_effects.rpc()  # Ensure this is called remotely
+			if raycast.is_colliding():
+				var hit_player = raycast.get_collider()
+				if hit_player.has_method("recieve_damage"):
+					hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority(), 15)
+			AK_timer.start
+			if AKBullets == 0 and anim_player.current_animation != "AK_reload":
+				play_AK_reload_effects.rpc()
+
+	if Input.is_action_just_pressed("Reload") and AKBullets < 30 and anim_player.current_animation != "AK_reload" and anim_player.current_animation != "AK_shot" and current_gun_state == PlayerGunState.AK:
+		play_AK_reload_effects.rpc()
 
 
 	if anim_player.current_animation == "pistol_shot":
@@ -224,17 +221,24 @@ func _physics_process(delta):
 		anim_player.play("shotgun_walk")
 	elif current_gun_state == PlayerGunState.shotgun:
 		anim_player.play("shotgun_idle")
-	
-	if Input.is_action_just_pressed("secondary_gun"):
-		current_gun_state = PlayerGunState.shotgun
-		$head/Camera3D/Shotgun.show()
-		$head/Camera3D/AK.hide()
-		$head/Camera3D/pistol.hide()
+	elif anim_player.current_animation == "katana_slice":
+		pass
+	elif input_dir != Vector2.ZERO and is_on_floor() and current_movement_state != PlayerMovementState.Sliding and current_gun_state == PlayerGunState.katana:
+		anim_player.play("katana_walk")
+	elif current_gun_state == PlayerGunState.katana:
+		anim_player.play("katana_idle")
+		
 		
 	if Input.is_action_just_pressed("primary_gun"):
 		current_gun_state = PlayerGunState.AK
 		$head/Camera3D/AK.show()
 		$head/Camera3D/Shotgun.hide()
+		$head/Camera3D/pistol.hide()
+		
+	if Input.is_action_just_pressed("secondary_gun"):
+		current_gun_state = PlayerGunState.shotgun
+		$head/Camera3D/Shotgun.show()
+		$head/Camera3D/AK.hide()
 		$head/Camera3D/pistol.hide()
 	
 	if Input.is_action_just_pressed("third_gun"):
@@ -242,6 +246,7 @@ func _physics_process(delta):
 		$head/Camera3D/pistol.show()
 		$head/Camera3D/AK.hide()
 		$head/Camera3D/Shotgun.hide()
+		
 	move_and_slide()
 
 #MULTIPLAYER UPDATES
@@ -285,13 +290,12 @@ func play_shotgun_reload_effects():
 func play_katana_slice_effects():
 	anim_player.stop()
 	anim_player.play("katana_slice")
+	await get_tree().create_timer(0.15).timeout
+	apply_katana_damage()
 
 @rpc("any_peer")
-func recieve_damage():
-	if current_gun_state == PlayerGunState.pistol:
-		health -= 35
-	if current_gun_state == PlayerGunState.AK:
-		health -= 15
+func recieve_damage(damage):
+	health -= damage
 	if health <= 0:
 		health = 100
 		position = Vector3.ZERO
@@ -299,7 +303,13 @@ func recieve_damage():
 
 @rpc("call_remote")
 func update_slide_dust(emitting: bool):
-	slide_dust.emitting = emitting
+	if current_movement_state == PlayerMovementState.Sliding:
+		slide_dust.emitting = emitting
+	else:
+		slide_dust.emitting = not emitting
+		
+func _on_timer_timeout():
+	canShoot = true
 
 
 #ANIMATIONS FINISHED
@@ -321,5 +331,9 @@ func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shotgun_reload":
 		ShotgunBullets = 2
 		anim_player.play("shotgun_idle")
+	if anim_name == "katana_slice":
+		anim_player.play("katana_idle")
+	
 	
 		
+

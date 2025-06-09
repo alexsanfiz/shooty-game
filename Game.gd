@@ -2,7 +2,6 @@ extends Node
 
 @onready var main_Menu = $CanvasLayer/mainMenu
 @onready var address_entry = $CanvasLayer/mainMenu/MarginContainer/VBoxContainer/addressEntry
-@onready var name_entry = $CanvasLayer/mainMenu/MarginContainer/VBoxContainer/nameEntry
 @onready var hud = $CanvasLayer/HUD
 @onready var health_bar = $CanvasLayer/HUD/health
 @onready var ammocounter = $CanvasLayer/HUD/ammocount/counter
