@@ -51,6 +51,7 @@ theme_override_font_sizes/font_size = 100
 text = "Pistol"
 
 [node name="AKButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 38.6615
 offset_top = 20.7378
 offset_right = 176.662
@@ -60,6 +61,7 @@ theme_override_font_sizes/font_size = 100
 text = "AK"
 
 [node name="ShotgunButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 6.07082
 offset_top = 44.6907
 offset_right = 316.071
@@ -69,6 +71,7 @@ theme_override_font_sizes/font_size = 75
 text = "Shotgun"
 
 [node name="SwordButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 39.4603
 offset_top = 46.6198
 offset_right = 314.46

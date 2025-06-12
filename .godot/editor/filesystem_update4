@@ -4,10 +4,4 @@ res://pause_menu.gdshader
 res://map.tscn
 res://world.tscn
 res://pause_menu.tscn
-res://world.gd
-res://Game.gd
-res://pause_menu.gd
-res://Global.gd
-res://General.gd
 res://WeaponSelect.tscn
-res://WeaponSelect.gd
