@@ -19,6 +19,8 @@ var current_gun_state = PlayerGunState.pistol
 var current_movement_state = PlayerMovementState.Normal
 var last_shot_time = 0.0
 var shoot_delay = 0.2
+var kills = 0
+var deaths = 0
 
 @onready var head = $head
 @onready var camera = $head/Camera3D
@@ -31,17 +33,33 @@ var shoot_delay = 0.2
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 	
+	
 #ON READY
 func _ready():
-	if not is_multiplayer_authority(): return
+	var id = multiplayer.get_unique_id()
+	if is_multiplayer_authority(): 
+		
+		Global.player = self
+		Global._on_player_spawned(id, self)
+		Global.game_active = true
+		$PauseMenu.showID(id)
+		print("Authorized player: ", id)
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		camera.current = true
+		$MeshInstance3D.rotation.x = deg_to_rad(0)
+		$CollisionShape3D.rotation.x = deg_to_rad(0)
+		slide_dust.emitting = false
+		update_slide_dust.rpc(true)
+		current_gun_state = PlayerGunState.pistol
+	else:
+		print("no authority for ", name)
+		return
 	
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	camera.current = true
-	$MeshInstance3D.rotation.x = deg_to_rad(0)
-	$CollisionShape3D.rotation.x = deg_to_rad(0)
-	slide_dust.emitting = false
-	update_slide_dust.rpc(true)
-	current_gun_state = PlayerGunState.pistol
+
+func _process(delta):
+	if Global.game_active == false:
+		current_movement_state = PlayerMovementState.Normal
+		SPEED = 0.0
 
 #CAMERA AND MULTIPLAYER AUTHORITY
 func _unhandled_input(event):
@@ -49,12 +67,24 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
-		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
 #deals with pause menu
 	if event.is_action_pressed("ui_cancel"):
 		$PauseMenu.onpress()
+		if $PauseMenu.visible:
+			$PauseMenu.showStats(kills, deaths)
+			
+#Resetting
+	if Input.is_action_just_pressed("reset"):
+		die()
+		
+#GunSelect
+	if event.is_action_pressed("WeaponSelect"):
+		$WeaponMenu.onpress()
 
+#AmmoCounting
+		
 #SHOOTING AND RELOADING
 	if Input.is_action_just_pressed("shoot") and current_gun_state == PlayerGunState.pistol:
 		if PistolBullets > 0 and anim_player.current_animation != "pistol_shot" and anim_player.current_animation != "pistol_reload":
@@ -63,7 +93,18 @@ func _unhandled_input(event):
 			if raycast.is_colliding():
 				var hit_player = raycast.get_collider()
 				if hit_player.has_method("recieve_damage"):
-					hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
+					hit_player.rpc("recieve_damage", 35, get_multiplayer().get_unique_id())
+					hit_player.health-=35
+					if(hit_player.health <= 0):
+						hit_player.health = 100
+						if multiplayer.is_server():
+							kills+=1
+							Global.playerStats[multiplayer.get_unique_id()].kills += 1
+						else:
+							rpc_id(1, "report_kill", multiplayer.get_unique_id())
+							kills+=1
+						print("kill given")
+					print(hit_player.health)
 		if PistolBullets == 0 and anim_player.current_animation != "pistol_reload" and anim_player.current_animation != "pistol_shot":
 			play_pistol_reload_effects.rpc()
 
@@ -79,7 +120,18 @@ func _unhandled_input(event):
 			if raycast.is_colliding():
 				var hit_player = raycast.get_collider()
 				if hit_player.has_method("recieve_damage"):
-					hit_player.recieve_damage.rpc_id(hit_player.get_multiplayer_authority())
+					hit_player.rpc("recieve_damage", 15, get_multiplayer().get_unique_id())
+					hit_player.health-=15
+					if(hit_player.health <= 0):
+						hit_player.health = 100
+						if multiplayer.is_server():
+							kills+=1
+							Global.playerStats[multiplayer.get_unique_id()].kills += 1
+						else:
+							rpc_id(1, "report_kill", multiplayer.get_unique_id())
+							kills+=1
+						print("kill given")
+					print(hit_player.health)
 		if AKBullets == 0 and anim_player.current_animation != "AK_reload":
 			play_AK_reload_effects.rpc()
 
@@ -218,15 +270,40 @@ func play_AK_shoot_effects():
 	AK_muzzle_flash.emitting = true
 
 @rpc("any_peer")
-func recieve_damage():
-	if current_gun_state == PlayerGunState.pistol:
-		health -= 35
-	if current_gun_state == PlayerGunState.AK:
-		health -= 15
+func recieve_damage(damage: int, attacker: int):
+	if not is_multiplayer_authority():
+		print("no damage")
+	health -= damage
+	print("shot by: ", attacker)
 	if health <= 0:
-		health = 100
-		position = Vector3.ZERO
+		if multiplayer.is_server():
+			deaths+=1
+			Global.playerStats[multiplayer.get_unique_id()].deaths += 1
+			die()
+		else:
+			rpc_id(1, "report_death", multiplayer.get_unique_id())
+			deaths+=1
+			die()
 	health_changed.emit(health)
+	
+@rpc("authority")
+func report_kill(peer_id):
+	if not Global.playerStats.has(peer_id):
+		Global.playerStats[peer_id] = {"kills": 0, "deaths": 0}
+	Global.playerStats[peer_id].kills += 1
+	
+@rpc("authority")
+func report_death(peer_id):
+	if not Global.playerStats.has(peer_id):
+		Global.playerStats[peer_id] = {"kills": 0, "deaths": 0}
+	Global.playerStats[peer_id].deaths += 1
+	
+func die():
+	health = 100
+	position = Vector3.ZERO
+	PistolBullets = 8
+	AKBullets = 30
+	
 
 @rpc("call_remote")
 func update_slide_dust(emitting: bool):
@@ -247,3 +324,4 @@ func _on_animation_player_animation_finished(anim_name):
 		anim_player.play("AK_idle")
 	if anim_name == "AK_shot":
 		anim_player.play("AK_idle")
+		
