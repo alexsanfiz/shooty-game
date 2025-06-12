@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1vi8gnqi6e4p"]
+
+[ext_resource type="PackedScene" uid="uid://oul7u1cyqimp" path="res://bullet_particles.tscn" id="1_k7ac5"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ptbg6"]
+inherit_velocity_ratio = 1.5
+direction = Vector3(0, 0, -0.1)
+spread = 10.0
+initial_velocity_min = 0.4
+initial_velocity_max = 0.8
+radial_velocity_min = 1.0
+radial_velocity_max = 1.0
+gravity = Vector3(0, -1, 0)
+scale_min = 0.08
+scale_max = 0.12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gvrjq"]
+albedo_color = Color(1, 0.129412, 0.0901961, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_o3aaf"]
+material = SubResource("StandardMaterial3D_gvrjq")
+radius = 0.4
+height = 0.8
+
+[sub_resource type="GDScript" id="GDScript_s8jl1"]
+script/source = "extends GPUParticles3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	emitting = true
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if emitting == false:
+		queue_free()
+"
+
+[node name="GPUParticles3D" instance=ExtResource("1_k7ac5")]
+emitting = false
+amount = 8
+one_shot = true
+collision_base_size = 10.0
+process_material = SubResource("ParticleProcessMaterial_ptbg6")
+draw_pass_1 = SubResource("SphereMesh_o3aaf")
+script = SubResource("GDScript_s8jl1")

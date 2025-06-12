@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://d2lcu77evyiub"
+path="res://.godot/imported/3Story_Slim.obj-19a9cae846442c62d95b7770ca8c600d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/3Story_Slim.obj-19a9cae846442c62d95b7770ca8c600d.mesh"]
+
+source_file="res://OBJ-20250610T141224Z-1-001/OBJ/3Story_Slim.obj"
+dest_files=["res://.godot/imported/3Story_Slim.obj-19a9cae846442c62d95b7770ca8c600d.mesh", "res://.godot/imported/3Story_Slim.obj-19a9cae846442c62d95b7770ca8c600d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

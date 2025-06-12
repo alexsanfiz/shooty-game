@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cp4qd14be6xay"
+path="res://.godot/imported/1Story_RoundRoof.obj-6ce242a53d33ffc3b3dbf391bc33c431.mesh"
+
+[deps]
+
+files=["res://.godot/imported/1Story_RoundRoof.obj-6ce242a53d33ffc3b3dbf391bc33c431.mesh"]
+
+source_file="res://OBJ-20250610T141224Z-1-001/OBJ/1Story_RoundRoof.obj"
+dest_files=["res://.godot/imported/1Story_RoundRoof.obj-6ce242a53d33ffc3b3dbf391bc33c431.mesh", "res://.godot/imported/1Story_RoundRoof.obj-6ce242a53d33ffc3b3dbf391bc33c431.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
