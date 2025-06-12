@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bijvbvvtjvydr"
+path="res://.godot/imported/2Story_Sidehouse.obj-88c4d372e1281b726d8edbbb3112bb5e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/2Story_Sidehouse.obj-88c4d372e1281b726d8edbbb3112bb5e.mesh"]
+
+source_file="res://OBJ-20250610T141224Z-1-001/OBJ/2Story_Sidehouse.obj"
+dest_files=["res://.godot/imported/2Story_Sidehouse.obj-88c4d372e1281b726d8edbbb3112bb5e.mesh", "res://.godot/imported/2Story_Sidehouse.obj-88c4d372e1281b726d8edbbb3112bb5e.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

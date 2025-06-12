@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://830gexhsulss"]
+[gd_scene load_steps=47 format=3 uid="uid://830gexhsulss"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_jgjkb"]
 [ext_resource type="PackedScene" uid="uid://gk8067m4rsly" path="res://low-poly_desert_eagle.glb" id="2_4x1o3"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://dc1hvioj857e5" path="res://pause_menu.tscn" id="5_8p33i"]
 [ext_resource type="PackedScene" uid="uid://boiacournokuv" path="res://low-poly_fox_sterlingworth_philly.glb" id="5_qy6x0"]
 [ext_resource type="PackedScene" uid="uid://biep7tbsl4ym1" path="res://low_poly_katana.glb" id="6_yfh2a"]
-[ext_resource type="Script" path="res://Crosshair.gd" id="8_cjuf6"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_27bwh"]
 
@@ -65,10 +64,6 @@ lightmap_size_hint = Vector2i(12, 12)
 material = SubResource("StandardMaterial3D_33rve")
 flip_faces = true
 size = Vector2(0.75, 0.5)
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i4cqu"]
-radius = 0.26989
-height = 2.89754
 
 [sub_resource type="Animation" id="Animation_03e0r"]
 resource_name = "AK_idle"
@@ -617,7 +612,7 @@ scale_curve = SubResource("CurveTexture_f1fna")
 scale_over_velocity_max = 1000.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h1if3"]
-albedo_color = Color(0.560784, 0.552941, 0.533333, 1)
+albedo_color = Color(0.694118, 0.686275, 0.670588, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_pcimn"]
 material = SubResource("StandardMaterial3D_h1if3")
@@ -681,6 +676,7 @@ draw_pass_1 = SubResource("PlaneMesh_xq5vm")
 
 [node name="Shotgun" parent="head/Camera3D" instance=ExtResource("5_qy6x0")]
 transform = Transform3D(0.410035, -0.0191855, 3.22221, 0.0523433, 1.28478, 0, -1.12656, 0.0527117, 1.17279, 0.610423, -0.200376, -0.537995)
+visible = false
 
 [node name="shotgunmuzzleflash" type="GPUParticles3D" parent="head/Camera3D/Shotgun"]
 transform = Transform3D(2.23517e-08, 0.764138, -0.13738, 0.395366, -1.11759e-08, -3.72529e-09, -2.56114e-09, -0.134738, -0.779118, 0.583146, 0.0661694, 8.77902e-05)
@@ -697,17 +693,22 @@ draw_pass_1 = SubResource("PlaneMesh_iu3g2")
 
 [node name="Katana" parent="head/Camera3D" instance=ExtResource("6_yfh2a")]
 transform = Transform3D(1.51922e-05, 0.000173648, -0.00199239, -0.00199239, 0.000174311, -5.7337e-12, 0.000173648, 0.00198481, 0.000174311, 1.1, -0.6, -0.8)
-visible = false
 
-[node name="Area3D" type="Area3D" parent="head/Camera3D/Katana"]
-transform = Transform3D(1, -7.45058e-09, -4.65661e-10, -7.45058e-09, 1, -1.49012e-08, 0, -7.45058e-09, 1, 0, 0, 0)
+[node name="KatanaRaycast" type="RayCast3D" parent="head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, -0.000634767, 0.000473857, -0.00421357)
 visible = false
+target_position = Vector3(0, 0, 2.25)
+collision_mask = 2
+debug_shape_thickness = 5
 
-[node name="katana_collision_shape" type="CollisionShape3D" parent="head/Camera3D/Katana/Area3D"]
-transform = Transform3D(-9.53674e-07, -300, 1.49012e-06, 100, -2.09808e-05, 9.53674e-07, -1.81198e-05, 5.00679e-06, 100, -344.609, 153.58, 262.345)
-shape = SubResource("CapsuleShape3D_i4cqu")
+[node name="RayCast3D" type="RayCast3D" parent="head/Camera3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+visible = false
+target_position = Vector3(0, 0, 50)
+collision_mask = 2
 
 [node name="RayContainer" type="Node3D" parent="head/Camera3D"]
+visible = false
 
 [node name="RayCast3D1" type="RayCast3D" parent="head/Camera3D/RayContainer"]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1.90735e-06, 0)
@@ -744,55 +745,20 @@ transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1.
 target_position = Vector3(0, 0, 50)
 collision_mask = 2
 
-[node name="Crosshair" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-script = ExtResource("8_cjuf6")
+[node name="RayCast3D8" type="RayCast3D" parent="head/Camera3D/RayContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.74846e-07, 0, 1.74846e-07, 1, 0, 0, 0)
+target_position = Vector3(0, 0, 50)
+collision_mask = 2
 
-[node name="Center" type="Control" parent="Crosshair"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
+[node name="RayCast3D9" type="RayCast3D" parent="head/Camera3D/RayContainer"]
+transform = Transform3D(1, 0, 0, 0, -1, 2.62268e-07, 0, -2.62268e-07, -1, 0, -1.90735e-06, 0)
+target_position = Vector3(0, 0, 50)
+collision_mask = 2
 
-[node name="Line2D" type="Line2D" parent="Crosshair/Center"]
-points = PackedVector2Array(0.001, 0, 0, 0)
-width = 3.5
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="right" type="Line2D" parent="Crosshair/Center"]
-position = Vector2(10, 0)
-points = PackedVector2Array(10, 0, 0, 0)
-width = 2.5
-
-[node name="bottom" type="Line2D" parent="Crosshair/Center"]
-position = Vector2(0, 10)
-rotation = 1.5708
-points = PackedVector2Array(10, 0, 0, 0)
-width = 2.5
-
-[node name="left" type="Line2D" parent="Crosshair/Center"]
-position = Vector2(-10, 0)
-rotation = 3.14159
-points = PackedVector2Array(10, 0, 0, 0)
-width = 2.5
-
-[node name="top" type="Line2D" parent="Crosshair/Center"]
-position = Vector2(0, -10)
-rotation = 4.71239
-points = PackedVector2Array(10, 0, 0, 0)
-width = 2.5
+[node name="RayCast3D10" type="RayCast3D" parent="head/Camera3D/RayContainer"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1.90735e-06, 0)
+target_position = Vector3(0, 0, 50)
+collision_mask = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -806,8 +772,10 @@ replication_config = SubResource("SceneReplicationConfig_62bjw")
 [node name="slideDust" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0701369, 0.349278)
 sorting_offset = 5.0
+emitting = false
 amount = 100
 lifetime = 0.25
+fixed_fps = 60
 trail_enabled = true
 trail_lifetime = 0.06
 process_material = SubResource("ParticleProcessMaterial_7j4rc")
@@ -815,11 +783,9 @@ draw_pass_1 = SubResource("SphereMesh_pcimn")
 draw_skin = SubResource("Skin_7y01f")
 
 [node name="PauseMenu" parent="." instance=ExtResource("5_8p33i")]
-visible = false
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.2
 
-[connection signal="body_entered" from="head/Camera3D/Katana/Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://qdlwkp6ip1h7"
+path="res://.godot/imported/iansmap 1.obj-0f7c2515f3f362bb00558f85abf824ca.mesh"
+
+[deps]
+
+files=["res://.godot/imported/iansmap 1.obj-0f7c2515f3f362bb00558f85abf824ca.mesh"]
+
+source_file="res://iansmap 1.obj"
+dest_files=["res://.godot/imported/iansmap 1.obj-0f7c2515f3f362bb00558f85abf824ca.mesh", "res://.godot/imported/iansmap 1.obj-0f7c2515f3f362bb00558f85abf824ca.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
