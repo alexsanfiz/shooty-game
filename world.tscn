@@ -1,14 +1,11 @@
-[gd_scene load_steps=47 format=3 uid="uid://830gexhsulss"]
+[gd_scene load_steps=31 format=3 uid="uid://830gexhsulss"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_jgjkb"]
 [ext_resource type="PackedScene" uid="uid://gk8067m4rsly" path="res://low-poly_desert_eagle.glb" id="2_4x1o3"]
-[ext_resource type="Script" path="res://Camera3D.gd" id="2_uvu7y"]
-[ext_resource type="Texture2D" uid="uid://dklbobnnr6s5s" path="res://m_6.png" id="3_v3qyb"]
-[ext_resource type="Texture2D" uid="uid://ba3a7wwhyiu65" path="res://kenney_particle-pack/PNG (Transparent)/star_01.png" id="3_xd0dt"]
+[ext_resource type="Texture2D" uid="uid://dy5yqgn0iubn" path="res://kenney_particle-pack/PNG (Transparent)/star_06.png" id="3_m4fnp"]
 [ext_resource type="PackedScene" uid="uid://dwr2cngtmduuw" path="res://low_poly_ak-47.glb" id="4_0x2d6"]
-[ext_resource type="PackedScene" uid="uid://dc1hvioj857e5" path="res://pause_menu.tscn" id="5_8p33i"]
-[ext_resource type="PackedScene" uid="uid://boiacournokuv" path="res://low-poly_fox_sterlingworth_philly.glb" id="5_qy6x0"]
-[ext_resource type="PackedScene" uid="uid://biep7tbsl4ym1" path="res://low_poly_katana.glb" id="6_yfh2a"]
+[ext_resource type="PackedScene" uid="uid://dc1hvioj857e5" path="res://pause_menu.tscn" id="5_os7xg"]
+[ext_resource type="PackedScene" uid="uid://cbxetua1ninxr" path="res://WeaponSelect.tscn" id="6_kd8cm"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_27bwh"]
 
@@ -28,46 +25,25 @@ angle_max = 45.0
 gravity = Vector3(0, 0, 0)
 color_ramp = SubResource("GradientTexture1D_cgmyy")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t6f5l"]
-albedo_texture = ExtResource("3_v3qyb")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_xq5vm"]
-material = SubResource("StandardMaterial3D_t6f5l")
-size = Vector2(0.5, 0.5)
-orientation = 0
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xjiqs"]
-
-[sub_resource type="Gradient" id="Gradient_vmaet"]
-offsets = PackedFloat32Array(0, 0.178571, 1)
-colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_h5e2f"]
-gradient = SubResource("Gradient_vmaet")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3nn85"]
-color_ramp = SubResource("GradientTexture1D_h5e2f")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_33rve"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1q5lj"]
 transparency = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
-albedo_color = Color(0.972549, 0.792157, 0.435294, 1)
-albedo_texture = ExtResource("3_xd0dt")
+albedo_color = Color(1, 0.960784, 0.670588, 1)
+albedo_texture = ExtResource("3_m4fnp")
 billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_iu3g2"]
-lightmap_size_hint = Vector2i(12, 12)
-material = SubResource("StandardMaterial3D_33rve")
-flip_faces = true
-size = Vector2(0.75, 0.5)
+[sub_resource type="PlaneMesh" id="PlaneMesh_xq5vm"]
+material = SubResource("StandardMaterial3D_1q5lj")
+size = Vector2(0.5, 0.5)
+orientation = 2
 
 [sub_resource type="Animation" id="Animation_03e0r"]
 resource_name = "AK_idle"
-length = 2.0
+length = 1.5
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -76,10 +52,10 @@ tracks/0/path = NodePath("head/Camera3D/AK:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.2, 2),
+"times": PackedFloat32Array(0, 0.7, 1.5),
 "transitions": PackedFloat32Array(-2, -2, 0.5),
 "update": 0,
-"values": [Vector3(0, 1.5708, 0), Vector3(3.63123e-07, 1.5708, 0.0935152), Vector3(0, 1.5708, 0)]
+"values": [Vector3(0, 1.5708, 0), Vector3(-8.52767e-09, 1.5708, 0.19635), Vector3(0, 1.5708, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -88,16 +64,15 @@ tracks/1/path = NodePath("head/Camera3D/AK:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.2, 2),
+"times": PackedFloat32Array(0, 0.7, 1.5),
 "transitions": PackedFloat32Array(-2, -2, 0.5),
 "update": 0,
-"values": [Vector3(0.412, -0.303426, -0.633), Vector3(0.411674, -0.208817, -0.632561), Vector3(0.412, -0.303426, -0.633)]
+"values": [Vector3(0.412, -0.351, -0.633), Vector3(0.411674, -0.134254, -0.632561), Vector3(0.412, -0.351, -0.633)]
 }
 
 [sub_resource type="Animation" id="Animation_u56jq"]
 resource_name = "AK_reload"
 length = 1.5
-step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -105,7 +80,7 @@ tracks/0/path = NodePath("head/Camera3D/AK:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.57, 1.2, 1.5),
+"times": PackedFloat32Array(0, 0.6, 1.2, 1.5),
 "transitions": PackedFloat32Array(0.5, -2, 0.5, 0.5),
 "update": 0,
 "values": [Vector3(0.412, -0.351, -0.633), Vector3(0.412, -0.116679, -0.633), Vector3(0.412, -0.351, -0.633), Vector3(0.412, -0.351, -0.633)]
@@ -117,7 +92,7 @@ tracks/1/path = NodePath("head/Camera3D/AK:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.63, 1.2, 1.5),
+"times": PackedFloat32Array(0, 0.6, 1.2, 1.5),
 "transitions": PackedFloat32Array(0.5, -2, 0.5, 0.5),
 "update": 0,
 "values": [Vector3(0, 1.5708, 0), Vector3(0, 1.5708, 1.74533), Vector3(0, 1.5708, 6.80678), Vector3(0, 1.5708, 6.28319)]
@@ -218,129 +193,6 @@ tracks/3/keys = {
 "update": 0,
 "values": [Vector3(0, 1.5708, 0)]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("head/Camera3D/Shotgun:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 1.22173, 0.0436332)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("head/Camera3D/Shotgun:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0.610423, -0.200376, -0.537995)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("head/Camera3D/Katana:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(1.1, -0.6, -0.8)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("head/Camera3D/Katana:rotation")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(2.86685e-09, -1.48353, -1.48353)]
-}
-
-[sub_resource type="Animation" id="Animation_7j063"]
-resource_name = "katana_idle"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("head/Camera3D/Katana:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 2),
-"transitions": PackedFloat32Array(0.31864, 1.07177, 1.8025),
-"update": 0,
-"values": [Vector3(1.1, -0.6, -0.8), Vector3(1.06697, -0.561396, -0.8), Vector3(1.1, -0.6, -0.8)]
-}
-
-[sub_resource type="Animation" id="Animation_c26wt"]
-resource_name = "katana_slice"
-length = 0.75
-step = 0.025
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("head/Camera3D/Katana:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.025, 0.125, 0.15, 0.75),
-"transitions": PackedFloat32Array(1.36604, 2.21914, 1, -4, 2.92817),
-"update": 0,
-"values": [Vector3(1.1, -0.6, -0.8), Vector3(0.92207, -0.55, -0.7), Vector3(0.54913, -0.880382, -0.368781), Vector3(-0.46401, -0.988747, -0.217429), Vector3(1.1, -0.6, -0.8)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("head/Camera3D/Katana:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.025, 0.125, 0.15, 0.75),
-"transitions": PackedFloat32Array(2, 2.14355, 1, -4, 1.41421),
-"update": 0,
-"values": [Vector3(0, -1.48353, -1.48353), Vector3(-0.698132, -1.48353, -1.74533), Vector3(-1.0472, -0.523599, -0.174533), Vector3(-1.39626, -0.411898, -1.74846e-07), Vector3(0, -1.48353, -1.48353)]
-}
-
-[sub_resource type="Animation" id="Animation_bkap8"]
-resource_name = "katana_walk"
-loop_mode = 1
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("head/Camera3D/Katana:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
-"transitions": PackedFloat32Array(1.56917, 1, 0.378929, 1, 1.6245),
-"update": 0,
-"values": [Vector3(1.1, -0.6, -0.8), Vector3(1.04141, -0.555406, -0.8), Vector3(1.1, -0.6, -0.8), Vector3(1.16431, -0.586058, -0.8), Vector3(1.1, -0.6, -0.8)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("head/Camera3D/Katana:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
-"transitions": PackedFloat32Array(0.5, 1, 1.8025, 1, 0.241484),
-"update": 0,
-"values": [Vector3(0, -1.48353, -1.48353), Vector3(0.0412416, -1.48346, -1.47992), Vector3(0, -1.48353, -1.48353), Vector3(-0.0174533, -1.48353, -1.48353), Vector3(0, -1.48353, -1.48353)]
-}
 
 [sub_resource type="Animation" id="Animation_0eydn"]
 resource_name = "shot"
@@ -415,7 +267,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.02, 0.75),
 "transitions": PackedFloat32Array(1, 0.5, 2),
 "update": 0,
-"values": [Vector3(0.5, -0.25, -0.5), Vector3(0.547211, -0.174408, -0.429908), Vector3(0.5, -0.25, -0.5)]
+"values": [Vector3(0.5, -0.25, -0.5), Vector3(0.5, -0.174408, -0.440288), Vector3(0.5, -0.25, -0.5)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -446,121 +298,6 @@ tracks/0/keys = {
 "values": [Vector3(0.5, -0.25, -0.5), Vector3(0.46, -0.21, -0.5), Vector3(0.5, -0.25, -0.5), Vector3(0.54, -0.21, -0.5), Vector3(0.5, -0.25, -0.5)]
 }
 
-[sub_resource type="Animation" id="Animation_tiq1s"]
-resource_name = "shotgun_idle"
-length = 2.5
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("head/Camera3D/Shotgun:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5, 2.5),
-"transitions": PackedFloat32Array(0.63728, 1.56917, 0.5),
-"update": 0,
-"values": [Vector3(0, 1.22173, 0.0436332), Vector3(0.0303251, 1.223, 0.127073), Vector3(0, 1.22173, 0.0436332)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("head/Camera3D/Shotgun:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.5, 2.5),
-"transitions": PackedFloat32Array(0.378929, 2.14355, 0.482968),
-"update": 0,
-"values": [Vector3(0.673521, -0.200376, -0.537995), Vector3(0.674, -0.172, -0.538), Vector3(0.673521, -0.200376, -0.537995)]
-}
-
-[sub_resource type="Animation" id="Animation_budoe"]
-resource_name = "shotgun_reload"
-length = 1.5
-step = 0.01
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("head/Camera3D/Shotgun:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.58, 1.25, 1.5),
-"transitions": PackedFloat32Array(2, -2, 0.241484, 0.5),
-"update": 0,
-"values": [Vector3(0.673521, -0.200376, -0.537995), Vector3(0.674, -0.095, -0.592), Vector3(0.674, -0.2, -0.538), Vector3(0.674, -0.2, -0.538)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("head/Camera3D/Shotgun:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.62, 1.25, 1.5),
-"transitions": PackedFloat32Array(2, -2, 0.287175, 0.5),
-"update": 0,
-"values": [Vector3(1.69194e-08, 1.22173, 0.0436332), Vector3(0, 1.22173, 1.74533), Vector3(0, 1.22173, 6.63225), Vector3(0, 1.22173, 6.32682)]
-}
-
-[sub_resource type="Animation" id="Animation_snvev"]
-resource_name = "shotgun_shot"
-length = 0.75
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("head/Camera3D/Shotgun:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.01, 0.02, 0.75),
-"transitions": PackedFloat32Array(1, 1, 2, 1.56917),
-"update": 0,
-"values": [Vector3(0.673521, -0.200376, -0.537995), Vector3(0.673521, -0.164494, -0.497044), Vector3(0.673521, -0.187548, -0.497505), Vector3(0.673521, -0.200376, -0.537995)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("head/Camera3D/Shotgun:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.01, 0.02, 0.75),
-"transitions": PackedFloat32Array(1, 1, 0.378929, 1.56917),
-"update": 0,
-"values": [Vector3(0, 1.22173, 0.0436332), Vector3(-4.2796e-09, 1.22173, 0.174533), Vector3(-4.2796e-09, 1.22173, 0.174533), Vector3(0, 1.22173, 0.0436332)]
-}
-
-[sub_resource type="Animation" id="Animation_t5qhk"]
-resource_name = "shotgun_walk"
-loop_mode = 1
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("head/Camera3D/Shotgun:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
-"transitions": PackedFloat32Array(1.68179, 0.517632, 1.7411, 0.482968, 2.37841),
-"update": 0,
-"values": [Vector3(0.674, -0.2, -0.538), Vector3(0.643208, -0.152967, -0.538), Vector3(0.674, -0.2, -0.538), Vector3(0.726984, -0.170341, -0.538), Vector3(0.674, -0.2, -0.538)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("head/Camera3D/Shotgun:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
-"transitions": PackedFloat32Array(1.8025, 0.574349, 1.93187, 0.31864, 3.03143),
-"update": 0,
-"values": [Vector3(0, 1.22173, 0.0436332), Vector3(0, 1.25664, 0.0436332), Vector3(0, 1.22173, 0.0436332), Vector3(0, 1.18682, 0.0436332), Vector3(0, 1.22173, 0.0436332)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_76f81"]
 _data = {
 "AK_idle": SubResource("Animation_03e0r"),
@@ -568,17 +305,10 @@ _data = {
 "AK_shot": SubResource("Animation_vq2tw"),
 "AK_walk": SubResource("Animation_ppah8"),
 "RESET": SubResource("Animation_5dv1c"),
-"katana_idle": SubResource("Animation_7j063"),
-"katana_slice": SubResource("Animation_c26wt"),
-"katana_walk": SubResource("Animation_bkap8"),
 "pistol_idle": SubResource("Animation_0eydn"),
 "pistol_reload": SubResource("Animation_k7hd5"),
 "pistol_shot": SubResource("Animation_fscl4"),
-"pistol_walk": SubResource("Animation_enf4v"),
-"shotgun_idle": SubResource("Animation_tiq1s"),
-"shotgun_reload": SubResource("Animation_budoe"),
-"shotgun_shot": SubResource("Animation_snvev"),
-"shotgun_walk": SubResource("Animation_t5qhk")
+"pistol_walk": SubResource("Animation_enf4v")
 }
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_62bjw"]
@@ -612,7 +342,6 @@ scale_curve = SubResource("CurveTexture_f1fna")
 scale_over_velocity_max = 1000.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h1if3"]
-albedo_color = Color(0.694118, 0.686275, 0.670588, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_pcimn"]
 material = SubResource("StandardMaterial3D_h1if3")
@@ -639,14 +368,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3416, 0)
 [node name="Camera3D" type="Camera3D" parent="head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0253909, 0.016852, 0.00421357)
 fov = 80.0
-script = ExtResource("2_uvu7y")
 
 [node name="pistol" parent="head/Camera3D" instance=ExtResource("2_4x1o3")]
 transform = Transform3D(0.000684043, 0, 0.00187939, 0, 0.002, 0, -0.00187939, 0, 0.000684043, 0.5, -0.25, -0.5)
-visible = false
 
 [node name="pistolmuzzleflash" type="GPUParticles3D" parent="head/Camera3D/pistol"]
-transform = Transform3D(0.999999, 0, -2.08616e-07, 0, 0.999998, 0, 2.08616e-07, 0, 0.999999, 138.322, 62.5947, 0.919052)
+transform = Transform3D(0.999999, 0, -2.38419e-07, 0, 0.999998, 0, 2.38419e-07, 0, 0.999999, 158.454, 43.4326, 1.70653)
 emitting = false
 amount = 1
 lifetime = 0.15
@@ -658,7 +385,8 @@ process_material = SubResource("ParticleProcessMaterial_thu2u")
 draw_pass_1 = SubResource("PlaneMesh_xq5vm")
 
 [node name="AK" parent="head/Camera3D" instance=ExtResource("4_0x2d6")]
-transform = Transform3D(-6.33498e-07, 0, 0.175, 0, 0.175, 0, -0.175, 0, -6.33498e-07, 0.411674, -0.351142, -0.632561)
+transform = Transform3D(-7.23998e-07, 0, 0.2, 0, 0.2, 0, -0.2, 0, -7.23998e-07, 0.411674, -0.351142, -0.632561)
+visible = false
 
 [node name="AKmuzzleflash" type="GPUParticles3D" parent="head/Camera3D/AK"]
 transform = Transform3D(0.999999, 0, -2.38419e-07, 0, 0.999998, 0, 2.38419e-07, 0, 0.999999, 4.13906, 0.757345, 1.48114)
@@ -670,93 +398,10 @@ explosiveness = 0.25
 randomness = 0.25
 visibility_aabb = AABB(-4, -3.97314, -4, 8, 8, 8)
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_xjiqs")
 draw_pass_1 = SubResource("PlaneMesh_xq5vm")
 
-[node name="Shotgun" parent="head/Camera3D" instance=ExtResource("5_qy6x0")]
-transform = Transform3D(0.410035, -0.0191855, 3.22221, 0.0523433, 1.28478, 0, -1.12656, 0.0527117, 1.17279, 0.610423, -0.200376, -0.537995)
-visible = false
-
-[node name="shotgunmuzzleflash" type="GPUParticles3D" parent="head/Camera3D/Shotgun"]
-transform = Transform3D(2.23517e-08, 0.764138, -0.13738, 0.395366, -1.11759e-08, -3.72529e-09, -2.56114e-09, -0.134738, -0.779118, 0.583146, 0.0661694, 8.77902e-05)
-emitting = false
-amount = 2
-lifetime = 0.2
-one_shot = true
-explosiveness = 0.25
-randomness = 0.25
-visibility_aabb = AABB(-4, -3.87402, -4, 8, 8, 8)
-local_coords = true
-process_material = SubResource("ParticleProcessMaterial_3nn85")
-draw_pass_1 = SubResource("PlaneMesh_iu3g2")
-
-[node name="Katana" parent="head/Camera3D" instance=ExtResource("6_yfh2a")]
-transform = Transform3D(1.51922e-05, 0.000173648, -0.00199239, -0.00199239, 0.000174311, -5.7337e-12, 0.000173648, 0.00198481, 0.000174311, 1.1, -0.6, -0.8)
-visible = false
-
-[node name="KatanaRaycast" type="RayCast3D" parent="head/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, -0.000634767, 0.000473857, -0.00421357)
-visible = false
-target_position = Vector3(0, 0, 2.25)
-collision_mask = 2
-debug_shape_thickness = 5
-
 [node name="RayCast3D" type="RayCast3D" parent="head/Camera3D"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-visible = false
-target_position = Vector3(0, 0, 50)
-collision_mask = 2
-
-[node name="RayContainer" type="Node3D" parent="head/Camera3D"]
-visible = false
-
-[node name="RayCast3D1" type="RayCast3D" parent="head/Camera3D/RayContainer"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1.90735e-06, 0)
-target_position = Vector3(0, 0, 50)
-collision_mask = 2
-
-[node name="RayCast3D2" type="RayCast3D" parent="head/Camera3D/RayContainer"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1.90735e-06, 0)
-target_position = Vector3(0, 0, 50)
-collision_mask = 2
-
-[node name="RayCast3D3" type="RayCast3D" parent="head/Camera3D/RayContainer"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1.90735e-06, 0)
-target_position = Vector3(0, 0, 50)
-collision_mask = 2
-
-[node name="RayCast3D4" type="RayCast3D" parent="head/Camera3D/RayContainer"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1.90735e-06, 0)
-target_position = Vector3(0, 0, 50)
-collision_mask = 2
-
-[node name="RayCast3D5" type="RayCast3D" parent="head/Camera3D/RayContainer"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1.90735e-06, 0)
-target_position = Vector3(0, 0, 50)
-collision_mask = 2
-
-[node name="RayCast3D6" type="RayCast3D" parent="head/Camera3D/RayContainer"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1.90735e-06, 0)
-target_position = Vector3(0, 0, 50)
-collision_mask = 2
-
-[node name="RayCast3D7" type="RayCast3D" parent="head/Camera3D/RayContainer"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1.90735e-06, 0)
-target_position = Vector3(0, 0, 50)
-collision_mask = 2
-
-[node name="RayCast3D8" type="RayCast3D" parent="head/Camera3D/RayContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, -1.74846e-07, 0, 1.74846e-07, 1, 0, 0, 0)
-target_position = Vector3(0, 0, 50)
-collision_mask = 2
-
-[node name="RayCast3D9" type="RayCast3D" parent="head/Camera3D/RayContainer"]
-transform = Transform3D(1, 0, 0, 0, -1, 2.62268e-07, 0, -2.62268e-07, -1, 0, -1.90735e-06, 0)
-target_position = Vector3(0, 0, 50)
-collision_mask = 2
-
-[node name="RayCast3D10" type="RayCast3D" parent="head/Camera3D/RayContainer"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1.90735e-06, 0)
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
 target_position = Vector3(0, 0, 50)
 collision_mask = 2
 
@@ -764,7 +409,7 @@ collision_mask = 2
 libraries = {
 "": SubResource("AnimationLibrary_76f81")
 }
-speed_scale = 0.2
+autoplay = "AK_idle"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_62bjw")
@@ -772,20 +417,24 @@ replication_config = SubResource("SceneReplicationConfig_62bjw")
 [node name="slideDust" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0701369, 0.349278)
 sorting_offset = 5.0
-emitting = false
 amount = 100
 lifetime = 0.25
-fixed_fps = 60
 trail_enabled = true
 trail_lifetime = 0.06
 process_material = SubResource("ParticleProcessMaterial_7j4rc")
 draw_pass_1 = SubResource("SphereMesh_pcimn")
 draw_skin = SubResource("Skin_7y01f")
 
-[node name="PauseMenu" parent="." instance=ExtResource("5_8p33i")]
+[node name="WeaponMenu" parent="." instance=ExtResource("6_kd8cm")]
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.2
+[node name="PauseMenu" parent="." instance=ExtResource("5_os7xg")]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visibility_layer = 128
+offset_left = 22.0
+offset_top = 549.0
+offset_right = 62.0
+offset_bottom = 589.0
+scale = Vector2(5.16, 2.06853)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

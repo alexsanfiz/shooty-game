@@ -1,28 +1,43 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1749582005
+::res://::1749733660
 ammo_count.gd::GDScript::-1::1737074589::0::1::::<>Control<>::
 ammo_count.tscn::PackedScene::6963858211544527248::1737074589::0::1::::<><>::res://ammo_count.gd<>uid://0ixglsx13lrt::::res://pistolammo.png<>res://counter.gd
+blood.tscn::PackedScene::-1::1749732984::0::1::::<><>::
+bulletdecal.tscn::PackedScene::-1::1749732984::0::1::::<><>::
+bullet_particles.gd::GDScript::-1::1749732984::0::1::::<>GPUParticles3D<>::
+bullet_particles.tscn::PackedScene::-1::1749732984::0::1::::<><>::
+Camera3D.gd::GDScript::-1::1749732984::0::1::::<>Camera3D<>::
 counter.gd::GDScript::-1::1737074516::0::1::::<>Label<>::
+Crosshair.gd::GDScript::-1::1749732984::0::1::::<>Control<>::
 export_presets.cfg::TextFile::-1::1748017130::0::1::::<><>::
-Game.gd::GDScript::-1::1749576378::0::1::::<>Node<>::
-Game.tscn::PackedScene::3302259273578411523::1749579089::0::1::::<><>::res://Game.gd<>uid://dd6jus3let06g::::res://map.tscn<>uid://lwoq7ipbbi17::::res://kenney_particle-pack/PNG (Transparent)/circle_05.png
-Global.gd::GDScript::-1::1749491400::0::1::::<>Node<>::
+Game.gd::GDScript::-1::1749733125::0::1::::<>Node<>::
+Game.tscn::PackedScene::3302259273578411523::1749733164::0::1::::<><>::res://Game.gd<>uid://dd6jus3let06g::::res://map.tscn<>uid://lwoq7ipbbi17::::res://kenney_particle-pack/PNG (Transparent)/circle_05.png
+Global.gd::GDScript::-1::1749733125::0::1::::<>Node<>::
+iansmap 1.blend::::-1::0::0::0::::<><>::
+iansmap 1.glb::PackedScene::5570295257371724654::1749732984::1749732984::1::::<><>::
+iansmap 1.obj::Mesh::1129922355682412686::1749732984::1749732984::1::::<><>::
 iansmap.obj::Mesh::380118375892675504::1749581412::1749582010::1::::<><>::
 low-poly_desert_eagle.glb::PackedScene::443826823219971758::1736818384::1736818384::1::::<><>::
 low-poly_fox_sterlingworth_philly.glb::PackedScene::3385583855259169861::1748017130::1748017130::1::::<><>::
 low_poly_ak-47.glb::PackedScene::8740154656279365318::1736818384::1736818384::1::::<><>::
-map.tscn::PackedScene::7434407450362987456::1749579089::0::1::::<><>::
-pauseblur.gdshader::Shader::-1::1749579089::0::1::::<><>::
-pause_menu.gd::GDScript::-1::1749572439::0::1::::<>ColorRect<>::
-pause_menu.gdshader::Shader::-1::1749579089::0::1::::<><>::
-pause_menu.tscn::PackedScene::7353776522850587334::1749579089::0::1::::<><>::res://pauseblur.gdshader<>res://pause_menu.gd
+low_poly_katana.glb::PackedScene::2957157844432215338::1749732984::1749732984::1::::<><>::
+low_poly_katana_0.png::CompressedTexture2D::3018112667198987161::1749732984::1749732984::1::::<><>::
+map.tscn::PackedScene::7434407450362987456::1749733164::0::1::::<><>::
+m_6.png::CompressedTexture2D::7883944434082145598::1749732984::1749732984::1::::<><>::
+pauseblur.gdshader::Shader::-1::1749733191::0::1::::<><>::
+pause_menu.gd::GDScript::-1::1749733125::0::1::::<>ColorRect<>::
+pause_menu.gdshader::Shader::-1::1749733191::0::1::::<><>::
+pause_menu.tscn::PackedScene::7353776522850587334::1749733164::0::1::::<><>::res://pauseblur.gdshader<>res://pause_menu.gd
 pistolammo.png::CompressedTexture2D::1772643925224550241::1737047377::1737047391::1::::<><>::
 png-clipart-fire-illustration-muzzle-flash-front-nature-fire-thumbnail.png::CompressedTexture2D::6522774411438869828::1748533229::1748533229::1::::<><>::
+pngimg.com - bullet_hole_PNG6063.png::CompressedTexture2D::5558971673292135033::1749732984::1749732984::1::::<><>::
 pngtree-muzzle-flash-images-vector-png-png-image_8377286.png::CompressedTexture2D::8743007695063498391::1748533229::1748533229::1::::<><>::
-WeaponSelect.tscn::PackedScene::4890788749088894755::1749579089::0::1::::<><>::
-world.gd::GDScript::-1::1749578813::0::1::::<>CharacterBody3D<>::
+WeaponSelect.gd::GDScript::-1::1749712702::0::1::::<>ColorRect<>::
+WeaponSelect.tscn::PackedScene::4890788749088894755::1749733164::0::1::::<><>::res://WeaponSelect.gd
+weapons_menu.tscn::PackedScene::-1::1749732984::0::1::::<><>::
+world.gd::GDScript::-1::1749733125::0::1::::<>CharacterBody3D<>::
 world.gdshader::Shader::-1::1736818384::0::1::::<><>::
-world.tscn::PackedScene::2375563302718136962::1749579089::0::1::::<><>::res://world.gd<>uid://gk8067m4rsly::::res://low-poly_desert_eagle.glb<>uid://dy5yqgn0iubn::::res://kenney_particle-pack/PNG (Transparent)/star_06.png<>uid://dwr2cngtmduuw::::res://low_poly_ak-47.glb<>uid://dc1hvioj857e5::::res://pause_menu.tscn
+world.tscn::PackedScene::2375563302718136962::1749733164::0::1::::<><>::res://world.gd<>uid://gk8067m4rsly::::res://low-poly_desert_eagle.glb<>uid://dy5yqgn0iubn::::res://kenney_particle-pack/PNG (Transparent)/star_06.png<>uid://dwr2cngtmduuw::::res://low_poly_ak-47.glb<>uid://dc1hvioj857e5::::res://pause_menu.tscn<>uid://cbxetua1ninxr::::res://WeaponSelect.tscn
 ::res://kenney_particle-pack/::1736818384
 License.txt::TextFile::-1::1736818384::0::1::::<><>::
 Preview.png::CompressedTexture2D::3555439027540319020::1736818384::1736818384::1::::<><>::
@@ -326,3 +341,31 @@ texture_10.svg::CompressedTexture2D::2967275334739042190::1736818384::1736818384
 texture_11.svg::CompressedTexture2D::8885573654073414466::1736818384::1736818384::1::::<><>::
 texture_12.svg::CompressedTexture2D::1702338595195638772::1736818384::1736818384::1::::<><>::
 texture_13.svg::CompressedTexture2D::5773125759151218773::1736818384::1736818384::1::::<><>::
+::res://OBJ-20250610T141224Z-1-001/::1749732984
+::res://OBJ-20250610T141224Z-1-001/OBJ/::1749732984
+1Story.obj::Mesh::115088608155128559::1749732984::1749732984::1::::<><>::
+1Story_GableRoof.obj::Mesh::416620611633249905::1749732984::1749732984::1::::<><>::
+1Story_RoundRoof.obj::Mesh::5886519216548857100::1749732984::1749732984::1::::<><>::
+1Story_Sign.obj::Mesh::115667227976728786::1749732984::1749732984::1::::<><>::
+2Story.obj::Mesh::48783381331667538::1749732984::1749732984::1::::<><>::
+2Story_2.obj::Mesh::898436720689450269::1749732984::1749732984::1::::<><>::
+2Story_Balcony.obj::Mesh::1580888569427333482::1749732984::1749732984::1::::<><>::
+2Story_Center.obj::Mesh::2948543275403459899::1749732984::1749732984::1::::<><>::
+2Story_Columns.obj::Mesh::9039486643209557439::1749732984::1749732984::1::::<><>::
+2Story_Double.obj::Mesh::1986959823190546418::1749732984::1749732984::1::::<><>::
+2Story_GableRoof.obj::Mesh::2063458655749760258::1749732984::1749732984::1::::<><>::
+2Story_RoundRoof.obj::Mesh::9209157794220302063::1749732984::1749732984::1::::<><>::
+2Story_Sidehouse.obj::Mesh::2967788811533297839::1749732984::1749732984::1::::<><>::
+2Story_Sign.obj::Mesh::3651848950754364300::1749732984::1749732984::1::::<><>::
+2Story_Slim.obj::Mesh::1987050645019624522::1749732984::1749732984::1::::<><>::
+2Story_Stairs.obj::Mesh::1702040678409299760::1749732984::1749732984::1::::<><>::
+2Story_Wide.obj::Mesh::531165595795756377::1749732984::1749732984::1::::<><>::
+2Story_Wide_2Doors.obj::Mesh::1865256434624446336::1749732984::1749732984::1::::<><>::
+3Story_Balcony.obj::Mesh::1057695645779345266::1749732984::1749732984::1::::<><>::
+3Story_Slim.obj::Mesh::9077227864856169817::1749732984::1749732984::1::::<><>::
+3Story_Small.obj::Mesh::4728286351180873170::1749732984::1749732984::1::::<><>::
+4Story.obj::Mesh::8977756919318396137::1749732984::1749732984::1::::<><>::
+4Story_Center.obj::Mesh::7856980611004114182::1749732984::1749732984::1::::<><>::
+4Story_Wide_2Doors.obj::Mesh::274918863493258024::1749732984::1749732984::1::::<><>::
+4Story_Wide_2Doors_Roof.obj::Mesh::1164518152123545555::1749732984::1749732984::1::::<><>::
+6Story_Stack.obj::Mesh::1184510669639789773::1749732984::1749732984::1::::<><>::
