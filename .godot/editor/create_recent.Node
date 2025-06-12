@@ -1,15 +1,14 @@
+Label
+Control
 CollisionShape3D
 StaticBody3D
 RayCast3D
-Label
 VBoxContainer
 PanelContainer
 GPUParticles3D
 MeshInstance3D
 Timer
 Line2D
-Control
 Node3D
 AudioStreamPlayer3D
 Node
-Button

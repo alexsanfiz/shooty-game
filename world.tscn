@@ -659,7 +659,6 @@ draw_pass_1 = SubResource("PlaneMesh_xq5vm")
 
 [node name="AK" parent="head/Camera3D" instance=ExtResource("4_0x2d6")]
 transform = Transform3D(-6.33498e-07, 0, 0.175, 0, 0.175, 0, -0.175, 0, -6.33498e-07, 0.411674, -0.351142, -0.632561)
-visible = false
 
 [node name="AKmuzzleflash" type="GPUParticles3D" parent="head/Camera3D/AK"]
 transform = Transform3D(0.999999, 0, -2.38419e-07, 0, 0.999998, 0, 2.38419e-07, 0, 0.999999, 4.13906, 0.757345, 1.48114)
@@ -693,6 +692,7 @@ draw_pass_1 = SubResource("PlaneMesh_iu3g2")
 
 [node name="Katana" parent="head/Camera3D" instance=ExtResource("6_yfh2a")]
 transform = Transform3D(1.51922e-05, 0.000173648, -0.00199239, -0.00199239, 0.000174311, -5.7337e-12, 0.000173648, 0.00198481, 0.000174311, 1.1, -0.6, -0.8)
+visible = false
 
 [node name="KatanaRaycast" type="RayCast3D" parent="head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, -0.000634767, 0.000473857, -0.00421357)

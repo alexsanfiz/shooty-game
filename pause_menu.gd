@@ -9,7 +9,6 @@ func _ready():
 	visible = false
 	paused = false
 
-
 func onpress():
 	if paused == false:
 		open()
@@ -29,7 +28,6 @@ func close():
 	print("unpaused")
 	
 func showStats(kills, deaths):
-	
 	$CenterContainer/PanelContainer2/VBoxContainer/KillDisplay.text = "Kills: %d" % kills
 	$CenterContainer/PanelContainer2/VBoxContainer/DeathDisplay.text = "Deaths: %d" % deaths
 

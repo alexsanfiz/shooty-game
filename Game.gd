@@ -6,9 +6,12 @@ extends Node
 @onready var health_bar = $CanvasLayer/HUD/health
 @onready var ammocounter = $CanvasLayer/HUD/ammocount/counter
 
+var playerStats := {}
+var topKills = -1
 const Player = preload("res://world.tscn")
 const PORT = 9999
 var enet_peer = ENetMultiplayerPeer.new()
+var kill_tracker = {}
 
 
 func _on_host_button_pressed():
@@ -21,19 +24,20 @@ func _on_host_button_pressed():
 	multiplayer.peer_disconnected.connect(remove_player)
 	
 	add_player(multiplayer.get_unique_id())
-	upnp_setup()
+	#upnp_setup()
 
 func _on_join_button_pressed():
 	main_Menu.hide()
 	hud.show()
 	
-	enet_peer.create_client(address_entry.text, PORT)
+	enet_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = enet_peer
 
 func add_player(peer_id):
 	var player = Player.instantiate()
 	player.name = str(peer_id)
 	add_child(player)
+	kill_tracker[peer_id] = 0
 	if player.is_multiplayer_authority():
 		player.health_changed.connect(update_health_bar)
 		
@@ -42,11 +46,43 @@ func remove_player(peer_id):
 	if player: 
 		player.queue_free()
 
+#func _process(delta):
+#	if multiplayer.is_server() and Global.game_active:
+#		Global.match_time -= delta
+#		var t = int(Global.match_time)
+#		var mins = t / 60
+#		var secs = t % 60
+#		rpc("update_match_time", Global.match_time)
+#		if Global.match_time <= 0:
+#			Global.match_time = 0
+#			Global.game_active = false
+#			end_match()
+
+#func end_match():
+#	if not multiplayer.is_server():
+#		return
+#	print("Match over. Finding winner...")
+#	print(Global.playerList)
+#	var top_player_id = null
+#	var top_kills = -1
+#	for id in Global.playerList:
+#		if Global.playerStats.has(id):
+#			print(Global.playerStats[id].kills)
+#			var kills = Global.playerStats[id].kills
+#			if kills > top_kills:
+#				top_kills = kills
+#				top_player_id = id
+#		else:
+#			print("id not found in playerStats")
+
+#	if top_player_id != null:
+#		print("Winner: Player ", top_player_id)
+#	else:
+#		print("winner null")
+
 func update_health_bar(health_value):
 	health_bar.value = health_value 
-	
-func update_ammo_count(ammo):
-	$counter.text = "7"
+
 
 func _on_multiplayer_spawner_spawned(node):
 	if node.is_multiplayer_authority():
@@ -65,7 +101,6 @@ func upnp_setup():
 	
 	print("Success! Join Address: %s" % upnp.query_external_address())
 	
-
 
 func _on_weapon_select_pressed():
 	pass

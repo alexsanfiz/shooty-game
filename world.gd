@@ -52,7 +52,7 @@ func _ready():
 	$CollisionShape3D.rotation.x = deg_to_rad(0)
 	slide_dust.emitting = false
 	update_slide_dust.rpc(false)
-	current_gun_state = PlayerGunState.katana
+	current_gun_state = PlayerGunState.AK
 	anim_player.speed_scale = 1.0
 
 
@@ -111,6 +111,7 @@ func shoot(damage, ray):
 			if(hit_player.health <= 0):
 				hit_player.health = 100
 				kills += 1
+				
 
 			var blood = blood.instantiate()
 			blood.global_position = ray.get_collision_point()
@@ -148,8 +149,8 @@ func _physics_process(delta):
 			velocity.y = JUMP_VELOCITY  # Add jump height
 			double_jumps = 0
 			if current_movement_state == PlayerMovementState.Sliding:
-				slide_dust.emitting = true
-				update_slide_dust.rpc(true)
+				slide_dust.emitting = false
+				update_slide_dust.rpc(false)
 				velocity.x = slide_direction.x * slide_speed
 				velocity.z = slide_direction.z * slide_speed
 				current_movement_state = PlayerMovementState.Normal
@@ -261,19 +262,28 @@ func _physics_process(delta):
 		$head/Camera3D/AK.show()
 		$head/Camera3D/Shotgun.hide()
 		$head/Camera3D/pistol.hide()
+		$head/Camera3D/Katana.hide()
 		
 	if Input.is_action_just_pressed("secondary_gun"):
 		current_gun_state = PlayerGunState.shotgun
 		$head/Camera3D/Shotgun.show()
 		$head/Camera3D/AK.hide()
 		$head/Camera3D/pistol.hide()
+		$head/Camera3D/Katana.hide()
 	
 	if Input.is_action_just_pressed("third_gun"):
 		current_gun_state = PlayerGunState.pistol
 		$head/Camera3D/pistol.show()
 		$head/Camera3D/AK.hide()
 		$head/Camera3D/Shotgun.hide()
-		
+		$head/Camera3D/Katana.hide()
+	
+	if Input.is_action_just_pressed("fourth_gun"):
+		current_gun_state = PlayerGunState.katana
+		$head/Camera3D/Katana.show()
+		$head/Camera3D/AK.hide()
+		$head/Camera3D/Shotgun.hide()
+		$head/Camera3D/pistol.hide()
 	move_and_slide()
 
 #MULTIPLAYER UPDATES
@@ -334,6 +344,7 @@ func update_slide_dust(emitting: bool):
 		slide_dust.emitting = not emitting
 	else:
 		slide_dust.emitting = emitting
+
 		
 func _on_timer_timeout():
 	canShoot = true
