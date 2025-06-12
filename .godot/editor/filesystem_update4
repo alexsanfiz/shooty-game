@@ -3,6 +3,8 @@ res://world.tscn
 res://pause_menu.tscn
 res://Game.tscn
 res://weapons_menu.tscn
-res://Camera3D.gd
-res://Game.gd
+res://bulletdecal.tscn
+res://bullet_particles.tscn
+res://blood.tscn
 res://world.gd
+res://Game.gd

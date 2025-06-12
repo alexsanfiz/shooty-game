@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://qudpdcgk8xh8"
+path="res://.godot/imported/4Story_Wide_2Doors_Roof.obj-6946da8f9f123fe027289a8407f4136a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/4Story_Wide_2Doors_Roof.obj-6946da8f9f123fe027289a8407f4136a.mesh"]
+
+source_file="res://OBJ-20250610T141224Z-1-001/OBJ/4Story_Wide_2Doors_Roof.obj"
+dest_files=["res://.godot/imported/4Story_Wide_2Doors_Roof.obj-6946da8f9f123fe027289a8407f4136a.mesh", "res://.godot/imported/4Story_Wide_2Doors_Roof.obj-6946da8f9f123fe027289a8407f4136a.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

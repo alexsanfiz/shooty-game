@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bnbvy0ki4y8dj"]
+[gd_scene load_steps=7 format=3 uid="uid://bnbvy0ki4y8dj"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_rnum5"]
 [ext_resource type="PackedScene" uid="uid://dd6jus3let06g" path="res://map.tscn" id="2_01u6p"]
+[ext_resource type="Script" path="res://Crosshair.gd" id="3_78kg7"]
 
 [sub_resource type="Theme" id="Theme_oi4bi"]
 
@@ -97,6 +98,61 @@ theme_override_styles/background = SubResource("StyleBoxFlat_n8ckt")
 theme_override_styles/fill = SubResource("StyleBoxFlat_j8m05")
 value = 100.0
 show_percentage = false
+
+[node name="Crosshair" type="Control" parent="CanvasLayer/HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("3_78kg7")
+
+[node name="Center" type="Control" parent="CanvasLayer/HUD/Crosshair"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Line2D" type="Line2D" parent="CanvasLayer/HUD/Crosshair/Center"]
+points = PackedVector2Array(0.001, 0, 0, 0)
+width = 3.5
+default_color = Color(0, 1, 0, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="right" type="Line2D" parent="CanvasLayer/HUD/Crosshair/Center"]
+position = Vector2(1, 0)
+points = PackedVector2Array(10, 0, 0, 0)
+width = 2.5
+default_color = Color(0, 1, 0, 1)
+
+[node name="bottom" type="Line2D" parent="CanvasLayer/HUD/Crosshair/Center"]
+position = Vector2(0, 1)
+rotation = 1.5708
+points = PackedVector2Array(10, 0, 0, 0)
+width = 2.5
+default_color = Color(0, 1, 0, 1)
+
+[node name="left" type="Line2D" parent="CanvasLayer/HUD/Crosshair/Center"]
+position = Vector2(-1, 0)
+rotation = 3.14159
+points = PackedVector2Array(10, 0, 0, 0)
+width = 2.5
+default_color = Color(0, 1, 0, 1)
+
+[node name="top" type="Line2D" parent="CanvasLayer/HUD/Crosshair/Center"]
+position = Vector2(0, -1)
+rotation = 4.71239
+points = PackedVector2Array(10, 0, 0, 0)
+width = 2.5
+default_color = Color(0, 1, 0, 1)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://world.tscn")

@@ -27,6 +27,11 @@ func close():
 	animation.play_backwards("menufadein")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	print("unpaused")
+	
+func showStats(kills, deaths):
+	
+	$CenterContainer/PanelContainer2/VBoxContainer/KillDisplay.text = "Kills: %d" % kills
+	$CenterContainer/PanelContainer2/VBoxContainer/DeathDisplay.text = "Deaths: %d" % deaths
 
 func _on_resume_pressed():
 	close()
